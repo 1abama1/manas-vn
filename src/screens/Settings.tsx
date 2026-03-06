@@ -20,10 +20,10 @@ import DialoguesSettings from "./settings/DialoguesSettings";
 import DownloadFileToTranslateSettingButton from "./settings/DownloadFileToTranslateSettingButton";
 import FullScreenSettings from "./settings/FullScreenSettings";
 import HideInterfaceSettingToggle from "./settings/HideInterfaceSettingToggle";
+import LanguageSettings from "./settings/LanguageSettings";
 import OpenHistorySettingButton from "./settings/OpenHistorySettingButton";
 import SaveLoadSettingButtons from "./settings/SaveLoadSettingButtons";
 import SkipSettingToggle from "./settings/SkipSettingToggle";
-import ThemeSettings from "./settings/ThemeSettings";
 
 export default function Settings() {
     const open = useSettingsScreenStore((state) => state.open);
@@ -70,6 +70,10 @@ export default function Settings() {
                     gap: 2,
                     height: "100%",
                     overflow: "auto",
+                    bgcolor: "rgba(0, 0, 0, 0.7)",
+                    backdropFilter: "blur(12px)",
+                    color: "white",
+                    border: "1px solid rgba(255,255,255,0.1)",
                 }}
             >
                 <DialogTitle>{t("settings")}</DialogTitle>
@@ -102,8 +106,8 @@ export default function Settings() {
                     <Typography level='title-md' fontWeight='bold'>
                         {t("display")}
                     </Typography>
+                    <LanguageSettings />
                     <FullScreenSettings />
-                    <ThemeSettings />
                 </DialogContent>
                 <Divider sx={{ mt: "auto" }} />
                 <ReturnMainMenuButton />

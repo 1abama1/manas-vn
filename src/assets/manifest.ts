@@ -13,7 +13,7 @@ const manifest: AssetsManifest = {
             assets: [
                 {
                     alias: "background_main_menu",
-                    src: "https://raw.githubusercontent.com/DRincs-Productions/pixi-vn-bucket/refs/heads/main/main-menu.png",
+                    src: "/manas/mainmenu.png",
                 },
             ],
         },
@@ -23,7 +23,7 @@ const manifest: AssetsManifest = {
             assets: [
                 {
                     alias: "bg01-hallway",
-                    src: "https://raw.githubusercontent.com/DRincs-Productions/pixi-vn-bucket/refs/heads/main/breakdown/bg01-hallway.webp",
+                    src: "/assets/mainmenu.png",
                 },
             ],
         },

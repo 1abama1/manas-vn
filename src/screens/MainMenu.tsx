@@ -41,14 +41,15 @@ export default function MainMenu() {
 
     return (
         <Stack
-            direction='column'
-            justifyContent='center'
-            alignItems='flex-start'
+            direction='row'
+            justifyContent='flex-start'
+            alignItems='flex-end'
             spacing={{ xs: 1, sm: 2, lg: 3 }}
             sx={{
                 height: "100%",
                 width: "100%",
-                paddingLeft: { xs: 1, sm: 2, md: 4, lg: 6, xl: 8 },
+                paddingLeft: { xs: 2, sm: 4, md: 6, xl: 8 },
+                paddingBottom: { xs: 4, sm: 6, md: 8, xl: 12 },
             }}
             component={motion.div}
             initial='closed'

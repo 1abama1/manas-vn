@@ -152,8 +152,8 @@ export default function MyThemeProvider({ children }: Iprops) {
     }, [primaryColor, solidColor]);
 
     return (
-        <MaterialCssVarsProvider theme={{ [MATERIAL_THEME_ID]: materialTheme }}>
-            <CssVarsProvider theme={theme}>
+        <MaterialCssVarsProvider theme={{ [MATERIAL_THEME_ID]: materialTheme }} defaultMode="dark">
+            <CssVarsProvider theme={theme} defaultMode="dark">
                 <ColorContext.Provider
                     value={{
                         primaryColor: primaryColor,
