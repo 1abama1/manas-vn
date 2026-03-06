@@ -97,11 +97,16 @@ export default function NarrationScreen() {
                         key={"dialogue-card"}
                         orientation='horizontal'
                         sx={{
-                            overflow: "auto",
+                            overflow: "hidden",
                             gap: 1,
                             padding: 0,
                             height: "100%",
-                            marginX: { xs: "0.9rem", sm: "1rem", md: "1.1rem", lg: "1.3rem", xl: "1.4rem" },
+                            width: "100%",
+                            marginX: 0,
+                            borderRadius: 0,
+                            borderLeft: 0,
+                            borderRight: 0,
+                            borderBottom: 0,
                         }}
                     >
                         {character?.icon && (
@@ -169,7 +174,8 @@ export default function NarrationScreen() {
                                     overflow: "auto",
                                     height: "100%",
                                     marginX: { xs: 0, md: 3 },
-                                    marginBottom: { xs: 0, md: 3 },
+                                    marginBottom: 0,
+                                    paddingBottom: { xs: 4, md: 5 },
                                 }}
                             >
                                 <NarrationScreenText paragraphRef={paragraphRef} />
@@ -178,13 +184,6 @@ export default function NarrationScreen() {
                     </Card>
                 </Box>
             </Box>
-            <Box
-                sx={{
-                    flex: "0 0 auto",
-                    height: { xs: "0.9rem", sm: "1rem", md: "1.1rem", lg: "1.3rem", xl: "1.4rem" },
-                    minHeight: 0,
-                }}
-            />
         </Box>
     );
 }

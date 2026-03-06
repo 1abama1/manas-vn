@@ -67,10 +67,8 @@ function get10ColorShades(color: string) {
 }
 
 export default function MyThemeProvider({ children }: Iprops) {
-    const [primaryColor, setPrimaryColor] = useState(localStorage.getItem("primaryColor") || "#1c73ff");
-    const [solidColor, setSolidColor] = useState<SolidColorType>(
-        (localStorage.getItem("solidColor") as SolidColorType) || "white"
-    );
+    const [primaryColor, setPrimaryColor] = useState("#ffffff");
+    const [solidColor, setSolidColor] = useState<SolidColorType>("black");
 
     // Build the theme: https://mui.com/joy-ui/customization/theme-builder
     const theme = useMemo(() => {

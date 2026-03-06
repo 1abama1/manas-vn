@@ -57,7 +57,8 @@ export default function QuickTools() {
                 paddingLeft: { xs: 1, sm: 2, md: 4, lg: 6, xl: 8 },
                 left: 0,
                 right: 0,
-                bottom: 0,
+                bottom: "0.5rem",
+                zIndex: 50,
             }}
             className={textMenuVarians}
         >
