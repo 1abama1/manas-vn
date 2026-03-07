@@ -169,6 +169,30 @@ const manifest: AssetsManifest = {
                 }
             ],
         },
+        {
+            name: "act4",
+            assets: [
+                // Backgrounds
+                {
+                    alias: "bg_last_will",
+                    src: "/manas/act-4/scene-1/1-bg.jpeg",
+                },
+                {
+                    alias: "bg_immortality",
+                    src: "/manas/act-4/scene-2/1-bg.jpeg",
+                },
+
+                // Characters
+                {
+                    alias: "manas_wounded",
+                    src: "/manas/sprites/almost-dead-manas.png",
+                },
+                {
+                    alias: "kanykei_mourning",
+                    src: "/manas/sprites/crying-kanykei.png",
+                }
+            ],
+        },
     ],
 };
 export default manifest;

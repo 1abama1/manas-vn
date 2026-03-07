@@ -64,7 +64,20 @@
 		"act3_scene3_konurbay_1": "This is where you die! – he growled...",
 		"act3_scene3_storyteller_2": "The Khan of the monks, Konurbai, with both hands raised, struck Manas on the back of the neck with his battle axe as he spoke the call to prayer!",
 		"act3_scene3_storyteller_3": "With a cry, Manas collapsed! Struck by the heavy axe, he fell headfirst. The wounded Manas bled out, and the light of the universe faded... A dark night fell upon the Kyrgyz people!",
-		"act3_scene3_sys_1": "(END OF ACT III)"
+		"act3_scene3_sys_1": "(END OF ACT III)",
+		"act4_scene1_storyteller_1": "O, world of great sorrow!\nFrom Beijing, six months away,\nwounded Manas, bleeding,\nreached the wide Talas,\nhis blood flowing like a river,\nhis death has truly arrived.\nHaving lost his wings—\nAlmambet, Chubak, and Syrgak—\nthe noble Manas on his bed,\nthe time to give his last will has come.",
+		"act4_scene1_kanykei_1": "The horses in the hills have white heads,\nyour young son is behind you...\nOh my noble one, if your eyes close,\nwhat will become of this widow?\nWhen the moon turns dark,\nmy King, what shall I do with the night?\nIf your precious eyes close,\nmy King, what shall I do with the day?!",
+		"act4_scene1_manas_1": "Kanykei, my lady, hear my words.\nIf I die and my end arrives,\ndo not settle along the river,\ndo not be like a fire that has gone out!\nWhen my eyes pass,\nAbyke and Kobesh—the six wicked ones—\nwill come to trample over you.",
+		"act4_scene1_manas_2": "Scatter the gathered gold and flee towards your father Temirkhan!",
+		"act4_scene1_kanykei_2": "I will obey your words, my leopard...",
+		"act4_scene1_manas_3": "Your six-month-old son Semetey,\nwithout letting him know his father's fate,\nwithout letting him feel his mother's state,\nraise him in Bukhara!\nAnd also, Kanykei...",
+		"act4_scene1_manas_4": "Lest the wicked ones take revenge on my corpse,\nlet them not open my grave.\nConsult with Bakai,\nbury me in an invisible place...",
+		"act4_scene1_storyteller_2": "Thus Manas closed his eyes.\nHis enemies trembled,\nbut for the Kyrgyz who had lost their protector,\nit was as if the sky had fallen,\nas if the earth had shaken.\nA dark night fell upon the Kyrgyz heads!",
+		"act4_scene2_storyteller_1": "The brave Kanykei\nbuilt the mausoleum firmly with fired bricks.\nSo that the mausoleum would stand for six centuries\nwithout being destroyed,\nshe brought masters,\ncarved patterns, added flowers,\nand hid Manas's bones.",
+		"act4_scene2_storyteller_2": "In the cave of Echkilik, unknown to men,\nshe secretly buried the hero's bones\nand kept them as a sacred trust.",
+		"act4_scene2_storyteller_3": "To say that Manas is dead\nis merely to say his body has entered the earth.\nBut Manas is not dead!\nHis spirit turned into the sky,\ninto the peaks of Ala-Too!\nAs long as there are Kyrgyz, there is Manas!",
+		"act4_scene2_storyteller_4": "Semetey, born of your blood,\nwill grow up and return\nto raise the banner of the Kyrgyz.\nThat day awaits ahead!\nLet the name of Manas never fade,\nlet the Kyrgyz people never perish from the world!",
+		"act4_sys_game_over": "[ END OF GAME ]"
 	},
 	"ui": {
 		"allert_error_occurred": "An error occurred, please report it to the developer",

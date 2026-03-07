@@ -53,7 +53,7 @@ export const chubak = new Character("chubak", {
 
 export const konurbay = new Character("konurbay", {
     name: "character_konurbay",
-    color: "#000000", // Black
+    color: "#452c80ff", // Black
 });
 
 RegisteredCharacters.add([storyteller, jakyp, chiyirdi, manas_baby, spy, manas, bakai, almambet, kanykei, chubak, konurbay]);

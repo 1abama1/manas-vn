@@ -1,6 +1,7 @@
-import { moveIn, narration, newLabel, showImage } from "@drincs/pixi-vn";
+import { moveIn, moveOut, narration, newLabel, showImage } from "@drincs/pixi-vn";
 import { Backgrounds, Emotions } from "../../values/assets";
 import { konurbay, storyteller } from "../../values/characters";
+import { act4 } from "../act4";
 
 export const act3_scene3 = newLabel(
     "act3_scene3",
@@ -36,6 +37,7 @@ export const act3_scene3 = newLabel(
         },
         async () => {
             await showImage("bg", Backgrounds.BLACK, { width: 1920, height: 1080 });
+            await moveOut("konurbay", { direction: "right" });
 
             narration.dialogue = {
                 character: storyteller,
@@ -44,6 +46,9 @@ export const act3_scene3 = newLabel(
         },
         async () => {
             narration.dialogue = "act3_scene3_sys_1";
+        },
+        async (props) => {
+            return await narration.jump(act4, props);
         }
     ]
 );

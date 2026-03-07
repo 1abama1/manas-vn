@@ -16,6 +16,8 @@ export enum Backgrounds {
     CHUBAK_CAMP = "bg_chubak_camp",
     BATTLE_CHAOS = "bg_battle_chaos",
     FINAL_PRAYER = "bg_final_prayer",
+    LAST_WILL = "bg_last_will",
+    IMMORTALITY = "bg_immortality",
 }
 
 export enum Emotions {
@@ -31,4 +33,6 @@ export enum Emotions {
     KANYKEI_BASE = "kanykei_base",
     CHUBAK_BASE = "chubak_base",
     KONURBAY_BASE = "konurbay_base",
+    MANAS_WOUNDED = "manas_wounded",
+    KANYKEI_MOURNING = "kanykei_mourning",
 }
