@@ -11,6 +11,11 @@ export enum Backgrounds {
     YURTA_NIGHT = "bg_yurta_night",
     KANYKEI_ROOM = "bg_kanykei_room",
     OATH_HILL = "bg_oath_hill",
+    BEIJING_WALLS = "bg_beijing_walls",
+    ALMAMBET_CAMP = "bg_almambet_camp",
+    CHUBAK_CAMP = "bg_chubak_camp",
+    BATTLE_CHAOS = "bg_battle_chaos",
+    FINAL_PRAYER = "bg_final_prayer",
 }
 
 export enum Emotions {
@@ -24,4 +29,6 @@ export enum Emotions {
     BAKAI_BASE = "bakai_base",
     ALMAMBET_BASE = "almambet_base",
     KANYKEI_BASE = "kanykei_base",
+    CHUBAK_BASE = "chubak_base",
+    KONURBAY_BASE = "konurbay_base",
 }

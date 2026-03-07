@@ -133,6 +133,42 @@ const manifest: AssetsManifest = {
                 }
             ],
         },
+        {
+            name: "act3",
+            assets: [
+                // Backgrounds
+                {
+                    alias: "bg_beijing_walls",
+                    src: "/manas/act-3/scene-1/1-bg.jpeg",
+                },
+                {
+                    alias: "bg_almambet_camp",
+                    src: "/manas/act-3/scene-1/2a-bg.jpeg",
+                },
+                {
+                    alias: "bg_chubak_camp",
+                    src: "/manas/act-3/scene-1/2b-bg.jpeg",
+                },
+                {
+                    alias: "bg_battle_chaos",
+                    src: "/manas/act-3/scene-2/1-bg.jpeg",
+                },
+                {
+                    alias: "bg_final_prayer",
+                    src: "/manas/act-3/scene-2/2-bg.jpeg",
+                },
+
+                // Characters
+                {
+                    alias: "chubak_base",
+                    src: "/manas/sprites/chubak.png",
+                },
+                {
+                    alias: "konurbay_base",
+                    src: "/manas/sprites/konurbai.png",
+                }
+            ],
+        },
     ],
 };
 export default manifest;

@@ -1,6 +1,7 @@
 import { moveIn, moveOut, narration, newLabel, showImage } from "@drincs/pixi-vn";
 import { Backgrounds, Emotions } from "../../values/assets";
 import { almambet, manas, storyteller } from "../../values/characters";
+import { act3 } from "../act3";
 
 export const act2_scene2 = newLabel(
     "act2_scene2",
@@ -54,8 +55,8 @@ export const act2_scene2 = newLabel(
                 text: "act2_scene2_storyteller_2"
             };
         },
-        async () => {
-            narration.dialogue = "act2_scene2_sys_1";
+        async (props) => {
+            return await narration.jump(act3, props);
         }
     ]
 );

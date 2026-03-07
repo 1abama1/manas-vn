@@ -46,4 +46,14 @@ export const kanykei = new Character("kanykei", {
     color: "#9932CC", // Темная орхидея (фиолетовый)
 });
 
-RegisteredCharacters.add([storyteller, jakyp, chiyirdi, manas_baby, spy, manas, bakai, almambet, kanykei]);
+export const chubak = new Character("chubak", {
+    name: "character_chubak",
+    color: "#B8860B", // Dark Goldenrod
+});
+
+export const konurbay = new Character("konurbay", {
+    name: "character_konurbay",
+    color: "#000000", // Black
+});
+
+RegisteredCharacters.add([storyteller, jakyp, chiyirdi, manas_baby, spy, manas, bakai, almambet, kanykei, chubak, konurbay]);
