@@ -21,7 +21,7 @@ export const act2 = newLabel(
                 "manas",
                 {
                     value: [Emotions.MANAS_ADULT],
-                    options: { xAlign: 0.25, yAlign: 0.75 },
+                    options: { xAlign: -1.2, yAlign: 0.5, scale: 1.2 },
                 },
                 { direction: "left" }
             );
@@ -30,7 +30,7 @@ export const act2 = newLabel(
                 "bakai",
                 {
                     value: [Emotions.BAKAI_BASE],
-                    options: { xAlign: 0.75, yAlign: 0.75 },
+                    options: { xAlign: 2, yAlign: 0, scale: 1.2 },
                 },
                 { direction: "right" }
             );

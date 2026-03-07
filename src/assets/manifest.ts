@@ -39,7 +39,7 @@ const manifest: AssetsManifest = {
                 },
                 {
                     alias: "bg_black",
-                    src: "/assets/bg_black.webp",
+                    src: "/manas/black.png",
                 },
                 {
                     alias: "bg_balbal",

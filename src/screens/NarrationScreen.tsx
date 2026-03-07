@@ -146,12 +146,12 @@ export default function NarrationScreen() {
                         />
                         <CardContent>
                             <Typography
-                                fontSize='xl'
+                                fontSize={{ xs: 'lg', sm: 'xl', lg: 'xl2' }}
                                 fontWeight='lg'
                                 sx={{
                                     color: character?.color,
                                     paddingLeft: 1,
-                                    height: { sx: undefined, md: 30 },
+                                    height: { xs: undefined, md: 30 },
                                     marginLeft: 2,
                                 }}
                                 className={
@@ -207,7 +207,7 @@ function NarrationScreenText({ paragraphRef }: { paragraphRef: RefObject<HTMLDiv
 
     return (
         <p
-            className={`prose ${mode === "dark" ? "dark:prose-invert" : ""}`}
+            className={`prose prose-sm sm:prose-base md:prose-lg lg:prose-xl ${mode === "dark" ? "dark:prose-invert" : ""}`}
             style={{ margin: 0, padding: 0, maxWidth: "100%" }}
         >
             <span>
