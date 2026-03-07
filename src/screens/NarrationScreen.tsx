@@ -62,8 +62,8 @@ export default function NarrationScreen() {
             <Box sx={{ flex: 1, minHeight: 0, display: "flex", flexDirection: "column" }}>
                 <SliderResizer
                     orientation='vertical'
-                    max={100}
-                    min={0}
+                    max={90}
+                    min={10}
                     value={cardHeight}
                     onChange={(_, value) => {
                         if (typeof value === "number") {

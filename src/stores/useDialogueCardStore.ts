@@ -20,8 +20,11 @@ type DialogueCardStoreType = {
 };
 
 const useDialogueCardStore = create<DialogueCardStoreType>((set) => ({
-    height: localStorage.getItem("dialogue_card_height") ? parseInt(localStorage.getItem("dialogue_card_height")!) : 30,
+    height: Math.max(localStorage.getItem("dialogue_card_height") ? parseInt(localStorage.getItem("dialogue_card_height")!) : 30, 10),
     setHeight: (value: number) => {
+        if (value < 10) {
+            value = 10;
+        }
         localStorage.setItem("dialogue_card_height", value.toString());
         set({ height: value });
     },
