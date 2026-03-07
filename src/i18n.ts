@@ -7,7 +7,7 @@ function getUserLang(): string {
     const saved = localStorage.getItem("app_language");
     if (saved) return saved;
     let userLang: string = navigator.language || "ky";
-    return userLang?.toLocaleLowerCase()?.split("-")[0] || "en";
+    return userLang?.toLocaleLowerCase()?.split("-")[0] || "ky";
 }
 
 function getLocalesResource(lng: string): Promise<any> {
@@ -38,7 +38,7 @@ export const useI18n = () => {
             .use(initReactI18next)
             .init({
                 debug: false,
-                fallbackLng: "en",
+                fallbackLng: "ky",
                 lng: getUserLang(),
                 interpolation: {
                     escapeValue: false,
