@@ -26,4 +26,24 @@ export const spy = new Character("spy", {
     color: "#2F4F4F", // Темно-серый
 });
 
-RegisteredCharacters.add([storyteller, jakyp, chiyirdi, manas_baby, spy]);
+export const manas = new Character("manas", {
+    name: "character_manas",
+    color: "#8B0000", // Темно-красный (взрослый)
+});
+
+export const bakai = new Character("bakai", {
+    name: "character_bakai",
+    color: "#4682B4", // Стальной синий
+});
+
+export const almambet = new Character("almambet", {
+    name: "character_almambet",
+    color: "#DAA520", // Золотистый
+});
+
+export const kanykei = new Character("kanykei", {
+    name: "character_kanykei",
+    color: "#9932CC", // Темная орхидея (фиолетовый)
+});
+
+RegisteredCharacters.add([storyteller, jakyp, chiyirdi, manas_baby, spy, manas, bakai, almambet, kanykei]);

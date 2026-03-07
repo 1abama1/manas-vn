@@ -6,7 +6,7 @@ import { initReactI18next } from "react-i18next";
 function getUserLang(): string {
     const saved = localStorage.getItem("app_language");
     if (saved) return saved;
-    let userLang: string = navigator.language || "en";
+    let userLang: string = navigator.language || "ky";
     return userLang?.toLocaleLowerCase()?.split("-")[0] || "en";
 }
 

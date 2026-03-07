@@ -1,6 +1,7 @@
 import { moveIn, moveOut, narration, newLabel, showImage } from "@drincs/pixi-vn";
 import { Backgrounds, Emotions } from "../../values/assets";
 import { chiyirdi, spy, storyteller } from "../../values/characters";
+import { act2 } from "../act2/scene1_khan";
 
 export const act1_scene2 = newLabel(
     "act1_scene2",
@@ -79,6 +80,9 @@ export const act1_scene2 = newLabel(
             await moveOut("manas_baby", { direction: "down" });
 
             narration.dialogue = "act1_scene2_sys_1";
+        },
+        async (props) => {
+            return await narration.jump(act2, props);
         }
     ]
 );

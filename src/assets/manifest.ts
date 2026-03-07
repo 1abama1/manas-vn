@@ -93,6 +93,46 @@ const manifest: AssetsManifest = {
                 },
             ],
         },
+        {
+            name: "act2",
+            assets: [
+                // Backgrounds
+                {
+                    alias: "bg_steppe_army",
+                    src: "/manas/act-2/scene-1/1-bg.jpeg",
+                },
+                {
+                    alias: "bg_yurta_night",
+                    src: "/manas/act-2/scene-1/2a.jpeg",
+                },
+                {
+                    alias: "bg_kanykei_room",
+                    src: "/manas/act-2/scene-1/2b.jpeg",
+                },
+                {
+                    alias: "bg_oath_hill",
+                    src: "/manas/act-2/scene-2/1-bg.jpeg",
+                },
+
+                // Characters
+                {
+                    alias: "manas_adult",
+                    src: "/manas/sprites/adult-manas.png",
+                },
+                {
+                    alias: "bakai_base",
+                    src: "/manas/sprites/bakai.png",
+                },
+                {
+                    alias: "almambet_base",
+                    src: "/manas/sprites/almanbet.png",
+                },
+                {
+                    alias: "kanykei_base",
+                    src: "/manas/sprites/kanykei.png",
+                }
+            ],
+        },
     ],
 };
 export default manifest;
