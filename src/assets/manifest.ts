@@ -42,12 +42,8 @@ const manifest: AssetsManifest = {
                     src: "/assets/bg_black.webp",
                 },
                 {
-                    alias: "bg_falcon_dream",
-                    src: "/manas/act1/scene-1/4a.jpeg",
-                },
-                {
                     alias: "bg_balbal",
-                    src: "/assets/bg_balbal.webp",
+                    src: "/manas/act1/scene-1/4a.jpeg",
                 },
                 {
                     alias: "bg_horses",
@@ -58,21 +54,30 @@ const manifest: AssetsManifest = {
                     src: "/manas/act1/scene-2/1.png",
                 },
                 {
+                    alias: "bg_eagle_space",
+                    src: "/manas/act1/scene-1/3a.jpeg",
+                },
+                {
                     alias: "bg_white",
                     src: "/assets/bg_white.webp",
                 },
-                {
-                    alias: "bg_spy_attack",
-                    src: "/manas/act1/scene-2/4.png",
-                },
+
                 // === Characters ===
                 {
                     alias: "storyteller_base",
                     src: "/manas/act1/scene-1/2.png",
                 },
                 {
+                    alias: "manas_baby",
+                    src: "/manas/act1/scene-2/4.png",
+                },
+                {
                     alias: "jakyp_sad",
                     src: "/manas/act1/scene-1/3.png",
+                },
+                {
+                    alias: "spy_attack",
+                    src: "/manas/act1/scene-2/3.png",
                 },
                 {
                     alias: "jakyp_hope",
@@ -83,12 +88,8 @@ const manifest: AssetsManifest = {
                     src: "/manas/act1/scene-2/2.png",
                 },
                 {
-                    alias: "spy_attack",
-                    src: "/assets/spy_attack.webp",
-                },
-                {
                     alias: "manas_neon_eyes",
-                    src: "/manas/act1/scene-2/3.png",
+                    src: "/manas/act1/scene-2/4.png",
                 },
             ],
         },

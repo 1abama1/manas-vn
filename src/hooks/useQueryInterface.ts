@@ -14,9 +14,9 @@ export function useQueryCanGoBack() {
 
 const CHOICE_MENU_OPTIONS_USE_QUEY_KEY = "choice_menu_options_use_quey_key";
 export function useQueryChoiceMenuOptions() {
-    const { t } = useTranslation(["narration"]);
+    const { t, i18n } = useTranslation(["narration"]);
     return useQuery({
-        queryKey: [INTERFACE_DATA_USE_QUEY_KEY, CHOICE_MENU_OPTIONS_USE_QUEY_KEY],
+        queryKey: [INTERFACE_DATA_USE_QUEY_KEY, CHOICE_MENU_OPTIONS_USE_QUEY_KEY, i18n.language],
         queryFn: async () =>
             narration.choices?.map((option) => ({
                 ...option,
@@ -44,11 +44,11 @@ type DialogueModel = {
 };
 const DIALOGUE_USE_QUEY_KEY = "dialogue_use_quey_key";
 export function useQueryDialogue() {
-    const { t } = useTranslation(["narration"]);
+    const { t, i18n } = useTranslation(["narration"]);
     const queryClient = useQueryClient();
 
     return useQuery<DialogueModel>({
-        queryKey: [INTERFACE_DATA_USE_QUEY_KEY, DIALOGUE_USE_QUEY_KEY],
+        queryKey: [INTERFACE_DATA_USE_QUEY_KEY, DIALOGUE_USE_QUEY_KEY, i18n.language],
         queryFn: async ({ queryKey }) => {
             let dialogue = narration.dialogue;
             let text = dialogue?.text;
@@ -62,6 +62,15 @@ export function useQueryDialogue() {
                 character = {
                     id: character,
                     name: t(character),
+                } as CharacterInterface;
+            } else if (character) {
+                character = {
+                    ...character,
+                    id: character.id,
+                    name: character.name ? t(character.name) : undefined,
+                    surname: character.surname ? t(character.surname) : undefined,
+                    color: character.color,
+                    icon: character.icon,
                 } as CharacterInterface;
             }
 
@@ -97,10 +106,10 @@ export function useQueryCanGoNext() {
 
 const NARRATIVE_HISTORY_USE_QUEY_KEY = "narrative_history_use_quey_key";
 export function useQueryNarrativeHistory({ searchString }: { searchString?: string }) {
-    const { t } = useTranslation(["narration"]);
+    const { t, i18n } = useTranslation(["narration"]);
 
     return useQuery({
-        queryKey: [INTERFACE_DATA_USE_QUEY_KEY, NARRATIVE_HISTORY_USE_QUEY_KEY, searchString],
+        queryKey: [INTERFACE_DATA_USE_QUEY_KEY, NARRATIVE_HISTORY_USE_QUEY_KEY, searchString, i18n.language],
         queryFn: async () => {
             const promises = stepHistory.narrativeHistory.map(async (step) => {
                 let character = step.dialogue?.character;
@@ -110,7 +119,7 @@ export function useQueryNarrativeHistory({ searchString }: { searchString?: stri
                     characterName = t(character);
                 } else {
                     characterName = character?.name
-                        ? character.name + (character.surname ? " " + character.surname : "")
+                        ? t(character.name) + (character.surname ? " " + t(character.surname) : "")
                         : undefined;
                     icon = character?.icon;
                 }

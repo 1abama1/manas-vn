@@ -7,20 +7,10 @@ export const act1_scene2 = newLabel(
     [
         async () => {
             await showImage("bg", Backgrounds.YURTA_OUTSIDE, { width: 1920, height: 1080 });
-            await moveOut("jakyp", { direction: "down" });
 
             await showImage("bg", Backgrounds.WHITE, { width: 1920, height: 1080 });
             await new Promise((resolve) => setTimeout(resolve, 500));
             await showImage("bg", Backgrounds.YURTA_OUTSIDE, { width: 1920, height: 1080 });
-
-            await moveIn(
-                "storyteller",
-                {
-                    value: [Emotions.STORYTELLER_BASE],
-                    options: { xAlign: 0.5, yAlign: 1 },
-                },
-                { direction: "up" }
-            );
 
             narration.dialogue = {
                 character: storyteller,
@@ -28,7 +18,6 @@ export const act1_scene2 = newLabel(
             };
         },
         async () => {
-            await moveOut("storyteller", { direction: "down" });
             await moveIn(
                 "chiyirdi",
                 {
@@ -45,14 +34,6 @@ export const act1_scene2 = newLabel(
         },
         async () => {
             await moveOut("chiyirdi", { direction: "down" });
-            await moveIn(
-                "storyteller",
-                {
-                    value: [Emotions.STORYTELLER_BASE],
-                    options: { xAlign: 0.5, yAlign: 1 },
-                },
-                { direction: "up" }
-            );
 
             narration.dialogue = {
                 character: storyteller,
@@ -60,8 +41,7 @@ export const act1_scene2 = newLabel(
             };
         },
         async () => {
-            await showImage("bg", Backgrounds.SPY_ATTACK, { width: 1920, height: 1080 });
-            await moveOut("storyteller", { direction: "down" });
+            await showImage("bg", Backgrounds.YURTA, { width: 1920, height: 1080 });
 
             await moveIn(
                 "spy",
@@ -78,6 +58,7 @@ export const act1_scene2 = newLabel(
             };
         },
         async () => {
+            await showImage("bg", Backgrounds.YURTA, { width: 1920, height: 1080 });
             await moveOut("spy", { direction: "down", duration: 0.1 });
             await moveIn(
                 "manas_baby",
@@ -85,16 +66,7 @@ export const act1_scene2 = newLabel(
                     value: [Emotions.MANAS_NEON_EYES],
                     options: { xAlign: 0.5, yAlign: 1 },
                 },
-                { direction: "up", duration: 0.2 }
-            );
-
-            await moveIn(
-                "storyteller",
-                {
-                    value: [Emotions.STORYTELLER_BASE],
-                    options: { xAlign: 0.2, yAlign: 1 },
-                },
-                { direction: "right" }
+                { direction: "up", duration: 0.4, type: "spring", ease: "circInOut" } // Прыжок
             );
 
             narration.dialogue = {
@@ -105,7 +77,6 @@ export const act1_scene2 = newLabel(
         async () => {
             await showImage("bg", Backgrounds.BLACK, { width: 1920, height: 1080 });
             await moveOut("manas_baby", { direction: "down" });
-            await moveOut("storyteller", { direction: "down" });
 
             narration.dialogue = "act1_scene2_sys_1";
         }

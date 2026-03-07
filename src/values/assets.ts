@@ -1,7 +1,7 @@
 export enum Backgrounds {
     YURTA = "bg_yurta",
     BLACK = "bg_black",
-    FALCON_DREAM = "bg_falcon_dream",
+    FALCON_DREAM = "bg_eagle_space",
     BALBAL = "bg_balbal",
     HORSES = "bg_horses",
     YURTA_OUTSIDE = "bg_yurta_outside",

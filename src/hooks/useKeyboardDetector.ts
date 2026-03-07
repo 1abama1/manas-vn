@@ -4,6 +4,8 @@ import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
 import useGameSaveScreenStore from "../stores/useGameSaveScreenStore";
+import useHistoryScreenStore from "../stores/useHistoryScreenStore";
+import useSettingsScreenStore from "../stores/useSettingsScreenStore";
 import useSkipStore from "../stores/useSkipStore";
 import { saveGameToIndexDB } from "../utils/save-utility";
 import useEventListener from "./useKeyDetector";
@@ -60,6 +62,13 @@ export default function useKeyboardDetector() {
                 case "Enter":
                 case "ArrowRight":
                     if (!event.altKey && !event.ctrlKey && !event.shiftKey) {
+                        if (
+                            useSettingsScreenStore.getState().open ||
+                            useGameSaveScreenStore.getState().open ||
+                            useHistoryScreenStore.getState().open
+                        ) {
+                            return;
+                        }
                         if (canContinue) {
                             if (skipEnabled) {
                                 setSkipEnabled(false);
@@ -71,6 +80,13 @@ export default function useKeyboardDetector() {
                     break;
                 case "ArrowLeft":
                     if (!event.altKey && !event.ctrlKey && !event.shiftKey) {
+                        if (
+                            useSettingsScreenStore.getState().open ||
+                            useGameSaveScreenStore.getState().open ||
+                            useHistoryScreenStore.getState().open
+                        ) {
+                            return;
+                        }
                         if (canGoBack) {
                             if (skipEnabled) {
                                 setSkipEnabled(false);

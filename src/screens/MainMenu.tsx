@@ -27,7 +27,7 @@ export default function MainMenu() {
 
     useEffect(() => {
         editHideInterface(false);
-        let bg = new ImageSprite({}, "background_main_menu");
+        let bg = new ImageSprite({ width: 1920, height: 1080 }, "background_main_menu");
         bg.load();
         let layer = canvas.getLayer(CANVAS_UI_LAYER_NAME);
         if (layer) {
@@ -42,14 +42,13 @@ export default function MainMenu() {
     return (
         <Stack
             direction='row'
-            justifyContent='flex-start'
+            justifyContent='center'
             alignItems='flex-end'
-            spacing={{ xs: 1, sm: 2, lg: 3 }}
+            spacing={{ xs: 2, sm: 4, lg: 6 }}
             sx={{
                 height: "100%",
                 width: "100%",
-                paddingLeft: { xs: 2, sm: 4, md: 6, xl: 8 },
-                paddingBottom: { xs: 4, sm: 6, md: 8, xl: 12 },
+                paddingBottom: { xs: 4, sm: 6, md: 8, xl: 10 },
             }}
             component={motion.div}
             initial='closed'

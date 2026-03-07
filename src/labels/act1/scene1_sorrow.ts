@@ -1,6 +1,6 @@
-import { moveIn, moveOut, narration, newChoiceOption, newLabel, showImage } from "@drincs/pixi-vn";
+import { narration, newChoiceOption, newLabel, showImage } from "@drincs/pixi-vn";
 import { Assets } from "pixi.js";
-import { Backgrounds, Emotions } from "../../values/assets";
+import { Backgrounds } from "../../values/assets";
 import { jakyp, storyteller } from "../../values/characters";
 import { act1_branch_a } from "./branch_a";
 import { act1_branch_b } from "./branch_b";
@@ -11,32 +11,13 @@ export const act1 = newLabel(
         async () => {
             await showImage("bg", Backgrounds.YURTA, { width: 1920, height: 1080 });
 
-            await moveIn(
-                "storyteller",
-                {
-                    value: [Emotions.STORYTELLER_BASE],
-                    options: { xAlign: 0.5, yAlign: 1 },
-                },
-                { direction: "up", ease: "circInOut", type: "spring" }
-            );
-
             narration.dialogue = {
                 character: storyteller,
                 text: "act1_scene1_storyteller_1"
             };
         },
         async () => {
-            await showImage("bg", Backgrounds.BLACK, { width: 1920, height: 1080 });
-            await moveOut("storyteller", { direction: "down" });
-
-            await moveIn(
-                "jakyp",
-                {
-                    value: [Emotions.JAKYP_SAD],
-                    options: { xAlign: 0.5, yAlign: 1 },
-                },
-                { direction: "up" }
-            );
+            await showImage("bg", Backgrounds.HORSES, { width: 1920, height: 1080 });
 
             narration.dialogue = {
                 character: jakyp,
@@ -45,16 +26,6 @@ export const act1 = newLabel(
         },
         async () => {
             await showImage("bg", Backgrounds.FALCON_DREAM, { width: 1920, height: 1080 });
-            await moveOut("jakyp", { direction: "down" });
-
-            await moveIn(
-                "storyteller",
-                {
-                    value: [Emotions.STORYTELLER_BASE],
-                    options: { xAlign: 0.5, yAlign: 1 },
-                },
-                { direction: "up" }
-            );
 
             narration.dialogue = {
                 character: storyteller,
@@ -63,16 +34,6 @@ export const act1 = newLabel(
         },
         async () => {
             await showImage("bg", Backgrounds.YURTA, { width: 1920, height: 1080 });
-            await moveOut("storyteller", { direction: "down" });
-
-            await moveIn(
-                "jakyp",
-                {
-                    value: [Emotions.JAKYP_HOPE],
-                    options: { xAlign: 0.5, yAlign: 1 },
-                },
-                { direction: "up" }
-            );
 
             narration.dialogue = {
                 character: jakyp,

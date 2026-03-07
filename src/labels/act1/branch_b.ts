@@ -1,6 +1,6 @@
-import { moveIn, moveOut, narration, newLabel, showImage } from "@drincs/pixi-vn";
+import { narration, newLabel, showImage } from "@drincs/pixi-vn";
 import { GameProgressManager } from "../../utils/GameProgressManager";
-import { Backgrounds, Emotions } from "../../values/assets";
+import { Backgrounds } from "../../values/assets";
 import { jakyp, storyteller } from "../../values/characters";
 import { act1_scene2 } from "./scene2_birth";
 
@@ -9,16 +9,6 @@ export const act1_branch_b = newLabel(
     [
         async () => {
             await showImage("bg", Backgrounds.HORSES, { width: 1920, height: 1080 });
-            await moveOut("jakyp", { direction: "down" });
-
-            await moveIn(
-                "storyteller",
-                {
-                    value: [Emotions.STORYTELLER_BASE],
-                    options: { xAlign: 0.5, yAlign: 1 },
-                },
-                { direction: "up" }
-            );
 
             narration.dialogue = {
                 character: storyteller,
@@ -26,16 +16,6 @@ export const act1_branch_b = newLabel(
             };
         },
         async () => {
-            await moveOut("storyteller", { direction: "down" });
-            await moveIn(
-                "jakyp",
-                {
-                    value: [Emotions.JAKYP_HOPE],
-                    options: { xAlign: 0.5, yAlign: 1 },
-                },
-                { direction: "up" }
-            );
-
             narration.dialogue = {
                 character: jakyp,
                 text: "act1_branch_b_jakyp_1"

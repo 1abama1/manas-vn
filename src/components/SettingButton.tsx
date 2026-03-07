@@ -17,7 +17,8 @@ export default function SettingButton({
             sx={{
                 boxShadow: "none",
                 "&:hover": disabled ? undefined : { bgcolor: "background.level1" },
-                backgroundColor: disabled ? useTheme().palette.neutral[100] : undefined,
+                backgroundColor: disabled ? "background.surface" : undefined,
+                opacity: disabled ? 0.5 : 1,
                 ...sx,
             }}
             onClick={disabled ? undefined : onClick}
@@ -41,8 +42,8 @@ export default function SettingButton({
                             "&:hover": disabled
                                 ? undefined
                                 : {
-                                      bgcolor: "transparent",
-                                  },
+                                    bgcolor: "transparent",
+                                },
                         },
                     },
                 }}

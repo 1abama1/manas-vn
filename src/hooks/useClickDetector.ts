@@ -1,6 +1,9 @@
 import { useEffect } from "react";
 import useNarrationFunctions from "./useNarrationFunctions";
 import { useQueryCanGoNext } from "./useQueryInterface";
+import useGameSaveScreenStore from "../stores/useGameSaveScreenStore";
+import useHistoryScreenStore from "../stores/useHistoryScreenStore";
+import useSettingsScreenStore from "../stores/useSettingsScreenStore";
 import useSkipStore from "../stores/useSkipStore";
 
 export default function useClickDetector() {
@@ -13,6 +16,15 @@ export default function useClickDetector() {
         const handleClick = (e: MouseEvent) => {
             // Only capture clicks if left mouse button is pressed
             if (e.button !== 0) return;
+
+            // Don't trigger if any menu overlay is open
+            if (
+                useSettingsScreenStore.getState().open ||
+                useGameSaveScreenStore.getState().open ||
+                useHistoryScreenStore.getState().open
+            ) {
+                return;
+            }
 
             // Optional: If user is selecting text, don't trigger
             if (window.getSelection()?.toString().length) {
@@ -44,8 +56,17 @@ export default function useClickDetector() {
             }
         };
 
-        window.addEventListener("click", handleClick);
-        return () => window.removeEventListener("click", handleClick);
+        const handleContextMenu = (e: MouseEvent) => {
+            e.preventDefault(); // Prevent browser context menu
+            useSettingsScreenStore.getState().editOpen(); // Toggle settings menu
+        };
+
+        window.addEventListener("click", handleClick, { capture: true });
+        window.addEventListener("contextmenu", handleContextMenu);
+        return () => {
+            window.removeEventListener("click", handleClick, { capture: true });
+            window.removeEventListener("contextmenu", handleContextMenu);
+        };
     }, [canContinue, goNext, skipEnabled, setSkipEnabled]);
 
     return null;
