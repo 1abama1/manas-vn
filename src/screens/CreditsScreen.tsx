@@ -6,7 +6,7 @@ import "./CreditsScreen.css";
 
 export default function CreditsScreen() {
     const navigate = useNavigate();
-    const { t } = useTranslation(["credits"]);
+    const { t } = useTranslation(["ui"]);
     const [holdProgress, setHoldProgress] = useState(0);
     const [isHolding, setIsHolding] = useState(false);
     const progressInterval = useRef<NodeJS.Timeout | null>(null);
@@ -47,22 +47,22 @@ export default function CreditsScreen() {
         >
             <div className="credits-list">
                 <div className="credit-block">
-                    <h2 className="credit-role">{t("developer_teamlead")}</h2>
+                    <h2 className="credit-role">{t("credits_developer_teamlead")}</h2>
                     <p className="credit-name">Именов Шахмухамад</p>
                 </div>
                 
                 <div className="credit-block">
-                    <h2 className="credit-role">{t("artist")}</h2>
+                    <h2 className="credit-role">{t("credits_artist")}</h2>
                     <p className="credit-name">Имя Художника</p>
                 </div>
                 
                 <div className="credit-block">
-                    <h2 className="credit-role">{t("sound_director")}</h2>
+                    <h2 className="credit-role">{t("credits_sound_director")}</h2>
                     <p className="credit-name">Имя Звукорежиссера</p>
                 </div>
                 
                 <div className="credit-block">
-                    <h2 className="credit-role">{t("sound_assistant")}</h2>
+                    <h2 className="credit-role">{t("credits_sound_assistant")}</h2>
                     <p className="credit-name">Имя Помощника</p>
                 </div>
             </div>
@@ -73,7 +73,7 @@ export default function CreditsScreen() {
             >
                 <div className="credit-block">
                     <h2 className="credit-role" style={{ color: "white", fontSize: "3rem" }}>
-                        {t("thanks_playing")}
+                        {t("credits_thanks_playing")}
                     </h2>
                 </div>
             </div>
@@ -83,7 +83,7 @@ export default function CreditsScreen() {
             </div>
 
             <div className="credits-skip">
-                {t("hold_to_skip")}
+                {t("credits_hold_to_skip")}
             </div>
         </div>
     );

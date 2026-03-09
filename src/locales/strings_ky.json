@@ -137,14 +137,12 @@
         "you_sure_to_delete_save": "Бул сактоо файлын чын эле жок кылгыңыз келеби?",
         "you_sure_to_load_save": "Бул сактоо файлын чын эле жүктөгүңүз келеби?",
         "you_sure_to_return_main_menu": "Башкы менюга чын эле кайткыңыз келеби? Бардык сакталбаган прогресс жоголот.",
-        "download_locale": "Котормо файлын түшүрүү"
-    },
-    "credits": {
-        "developer_teamlead": "Иштеп чыгуучу жана Тимлид",
-        "artist": "Сүрөтчү",
-        "sound_director": "Үн оператору",
-        "sound_assistant": "Үн операторунун жардамчысы",
-        "thanks_playing": "Оюн үчүн рахмат!",
-        "hold_to_skip": "Өткөрүп жиберүү үчүн басып туруңуз (2 сек.)"
+        "download_locale": "Котормо файлын түшүрүү",
+        "credits_developer_teamlead": "Иштеп чыгуучу жана Тимлид",
+        "credits_artist": "Сүрөтчү",
+        "credits_sound_director": "Үн оператору",
+        "credits_sound_assistant": "Үн операторунун жардамчысы",
+        "credits_thanks_playing": "Оюн үчүн рахмат!",
+        "credits_hold_to_skip": "Өткөрүп жиберүү үчүн басып туруңуз (2 сек.)"
     }
 }

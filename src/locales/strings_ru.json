@@ -137,14 +137,12 @@
         "you_sure_to_delete_save": "Вы уверены, что хотите удалить это сохранение?",
         "you_sure_to_load_save": "Вы уверены, что хотите загрузить это сохранение?",
         "you_sure_to_return_main_menu": "Вернуться в меню? Весь несохраненный прогресс будет потерян.",
-        "download_locale": "Скачать файл перевода"
-    },
-    "credits": {
-        "developer_teamlead": "Разработчик и Тимлид",
-        "artist": "Художник",
-        "sound_director": "Звукорежиссер",
-        "sound_assistant": "Помощник Звукорежиссера",
-        "thanks_playing": "Спасибо за игру!",
-        "hold_to_skip": "Зажмите, чтобы пропустить (2 сек.)"
+        "download_locale": "Скачать файл перевода",
+        "credits_developer_teamlead": "Разработчик и Тимлид",
+        "credits_artist": "Художник",
+        "credits_sound_director": "Звукорежиссер",
+        "credits_sound_assistant": "Помощник Звукорежиссера",
+        "credits_thanks_playing": "Спасибо за игру!",
+        "credits_hold_to_skip": "Зажмите, чтобы пропустить (2 сек.)"
     }
 }
