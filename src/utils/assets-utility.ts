@@ -14,8 +14,13 @@ export async function defineAssets() {
     await Assets.loadBundle(MAIN_MENU_ROUTE);
 
     // The game will start immediately, but these asserts will be loaded in the background.
-    // Assets.backgroundLoadBundle("main_menu");
-    // Assets.backgroundLoad("background_main_menu");
+    const backgroundBundles = manifest.bundles
+        ?.map(bundle => bundle.name)
+        .filter(name => name !== MAIN_MENU_ROUTE) || [];
+        
+    if (backgroundBundles.length > 0) {
+        Assets.backgroundLoadBundle(backgroundBundles);
+    }
 }
 
 /**

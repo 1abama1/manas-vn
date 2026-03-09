@@ -38,6 +38,10 @@ export default defineConfig({
                     },
                 ],
             },
+            workbox: {
+                globPatterns: ['**/*.{js,css,html,ico,png,svg,jpeg,webp,jpg}'],
+                maximumFileSizeToCacheInBytes: 50 * 1024 * 1024,
+            }
         }),
         vitePluginPixivn(),
     ],
