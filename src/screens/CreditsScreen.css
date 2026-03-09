@@ -1,0 +1,124 @@
+.credits-container {
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    overflow: hidden;
+    position: relative;
+}
+
+.credits-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+    align-items: center;
+    position: absolute;
+    top: 100%;
+    width: 100%;
+    animation: scrollNames 15s linear forwards;
+}
+
+.thank-you-wrapper {
+    position: absolute;
+    top: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Начинается с задержкой или большим отступом, чтобы идти после имен */
+    animation: stayInCenter 20s linear forwards;
+    /* Увеличиваем время и добавляем задержку начала основного движения */
+}
+
+.credit-block {
+    text-align: center;
+}
+
+.credit-role {
+    font-size: 1.5rem;
+    color: #a0a0a0;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.credit-name {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin: 0;
+}
+
+.credits-skip {
+    position: absolute;
+    bottom: 2rem;
+    right: 2rem;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    z-index: 10;
+}
+
+.credits-skip:hover {
+    color: white;
+}
+
+.skip-progress-container {
+    position: absolute;
+    bottom: 4rem;
+    right: 2rem;
+    width: 200px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 2px;
+    overflow: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.skip-progress-container.active {
+    opacity: 1;
+}
+
+.skip-progress-bar {
+    height: 100%;
+    background: white;
+    width: 0%;
+}
+
+@keyframes scrollNames {
+    0% {
+        transform: translateY(0);
+    }
+
+    100% {
+        transform: translateY(-250vh);
+    }
+}
+
+@keyframes stayInCenter {
+
+    /* Первые 5 секунд висит внизу (пока идут первые имена) */
+    0% {
+        transform: translateY(0);
+    }
+
+    25% {
+        transform: translateY(0);
+    }
+
+    /* За следующие 10 секунд доходит до центра (75% от 20с) */
+    75% {
+        transform: translateY(-50vh);
+    }
+
+    /* Висит в центре последние 5 секунд (25% времени) */
+    100% {
+        transform: translateY(-50vh);
+    }
+}

@@ -138,5 +138,13 @@
 		"you_sure_to_load_save": "Are you sure you want to load this save file?",
 		"you_sure_to_return_main_menu": "Are you sure you want to return to the main menu? All unsaved progress will be lost.",
 		"download_locale": "Download File to Translate"
+	},
+	"credits": {
+		"developer_teamlead": "Developer and Team Lead",
+		"artist": "Artist",
+		"sound_director": "Sound Director",
+		"sound_assistant": "Sound Assistant",
+		"thanks_playing": "Thanks for playing!",
+		"hold_to_skip": "Hold to skip (2 sec.)"
 	}
 }

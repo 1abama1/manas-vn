@@ -2,9 +2,10 @@ import { Game } from "@drincs/pixi-vn";
 import { useEffect } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import VisibilityButton from "./components/VisibilityButton";
-import { LOADING_ROUTE, MAIN_MENU_ROUTE, NARRATION_ROUTE } from "./constans";
+import { CREDITS_ROUTE, LOADING_ROUTE, MAIN_MENU_ROUTE, NARRATION_ROUTE } from "./constans";
 import useClickDetector from "./hooks/useClickDetector";
 import useSkipAutoDetector from "./hooks/useSkipAutoDetector";
+import CreditsScreen from "./screens/CreditsScreen";
 import HistoryScreen from "./screens/HistoryScreen";
 import LoadingScreen from "./screens/LoadingScreen";
 import MainMenu from "./screens/MainMenu";
@@ -23,6 +24,7 @@ export default function AppRoutes() {
             <Route key={"main_menu"} path={MAIN_MENU_ROUTE} element={<MainMenu />} />
             <Route key={"loading"} path={LOADING_ROUTE} element={<LoadingScreen />} />
             <Route key={"narration"} path={NARRATION_ROUTE} element={<NarrationElement />} />
+            <Route key={"credits"} path={CREDITS_ROUTE} element={<CreditsScreen />} />
             <Route path='*' element={<MainMenu />} />
         </Routes>
     );

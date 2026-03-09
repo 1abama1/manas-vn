@@ -1,4 +1,5 @@
 import { moveIn, moveOut, narration, newLabel, showImage } from "@drincs/pixi-vn";
+import { CREDITS_ROUTE } from "../../constans";
 import { Backgrounds, Emotions } from "../../values/assets";
 import { storyteller } from "../../values/characters";
 
@@ -44,6 +45,9 @@ export const act4_scene2 = newLabel(
         },
         async () => {
             narration.dialogue = "act4_sys_game_over";
+        },
+        async (props) => {
+            props.navigate(CREDITS_ROUTE);
         }
     ]
 );
