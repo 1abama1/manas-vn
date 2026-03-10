@@ -1,54 +1,68 @@
 import { sound } from "@pixi/sound";
 import { Music, Sfx } from "../values/sounds";
+import { storage } from "@drincs/pixi-vn";
 
 let _currentMusic: Music | null = null;
+const STORAGE_KEY_MASTER = "vol_master";
+const STORAGE_KEY_MUSIC = "vol_music";
+const STORAGE_KEY_SFX = "vol_sfx";
+
+// Initialize volumes from storage or defaults
+let _masterVol = storage.get<number>(STORAGE_KEY_MASTER) ?? 1.0;
+let _musicVol = storage.get<number>(STORAGE_KEY_MUSIC) ?? 0.6;
+let _sfxVol = storage.get<number>(STORAGE_KEY_SFX) ?? 1.0;
+
+// Apply initial global volume
+sound.volumeAll = _masterVol;
 
 /**
  * AudioManager – thin wrapper around @pixi/sound for the Manas VN.
- *
- * - Music: looped background tracks, only one plays at a time.
- * - Sfx:   one-shot effects, multiple can overlap.
- *
- * All aliases must be registered in the PixiJS asset manifest first
- * (see src/assets/manifest.ts).  The manager handles graceful
- * no-ops when a file hasn't been loaded yet so placeholder stubs
- * won't crash development.
  */
 const AudioManager = {
+    // -------------------------------------------------------
+    // GETTERS
+    // -------------------------------------------------------
+    getMasterVolume: () => _masterVol,
+    getMusicVolume: () => _musicVol,
+    getSfxVolume: () => _sfxVol,
+
     // -------------------------------------------------------
     // MUSIC
     // -------------------------------------------------------
 
-    /**
-     * Start a looping music track.
-     * If the same track is already playing it is left running.
-     */
-    playMusic(alias: Music, volume = 0.6): void {
-        if (_currentMusic === alias) return;
+    /** Start a looping music track. */
+    playMusic(alias: Music, volume = -1): void {
+        const finalVolume = volume >= 0 ? volume : _musicVol;
+        if (_currentMusic === alias) {
+            // If already playing, just update volume if needed
+            const instance = sound.find(alias);
+            if (instance) instance.volume = finalVolume;
+            return;
+        }
         this.stopMusic();
 
-        // Check if sound exists in manifest/loader to prevent assertion errors
         if (!sound.exists(alias)) {
-            console.warn(`[AudioManager] Music not loaded/found: ${alias}`);
+            console.warn(`[AudioManager] Music not loaded: ${alias}`);
             return;
         }
 
         try {
-            sound.play(alias, { loop: true, volume });
+            sound.play(alias, { loop: true, volume: finalVolume });
             _currentMusic = alias;
         } catch (e) {
             console.error(`[AudioManager] Error playing music ${alias}:`, e);
         }
     },
 
-    /** Stop the currently-playing music (with optional fade-out ms). */
+    /** Stop music with optional fade-out. */
     stopMusic(fadeMs = 0): void {
         if (!_currentMusic) return;
         try {
             if (fadeMs > 0) {
                 const instance = sound.find(_currentMusic);
                 if (instance) {
-                    const step = instance.volume / (fadeMs / 50);
+                    const originalVol = instance.volume;
+                    const step = originalVol / (fadeMs / 50);
                     const iv = setInterval(() => {
                         if (!instance || instance.volume <= 0) {
                             clearInterval(iv);
@@ -63,9 +77,7 @@ const AudioManager = {
             } else {
                 sound.stop(_currentMusic);
             }
-        } catch {
-            // already stopped or not loaded
-        }
+        } catch { /* noop */ }
         _currentMusic = null;
     },
 
@@ -74,42 +86,66 @@ const AudioManager = {
     // -------------------------------------------------------
 
     /** Play a one-shot sound effect. */
-    playSfx(alias: Sfx, volume = 1.0): void {
+    playSfx(alias: Sfx, volume = -1): void {
+        const finalVolume = volume >= 0 ? volume : _sfxVol;
         if (!sound.exists(alias)) {
-            console.warn(`[AudioManager] SFX not loaded/found: ${alias}`);
+            console.warn(`[AudioManager] SFX not loaded: ${alias}`);
             return;
         }
 
         try {
-            sound.play(alias, { volume });
+            sound.play(alias, { volume: finalVolume });
         } catch (e) {
             console.error(`[AudioManager] Error playing SFX ${alias}:`, e);
         }
     },
 
-    /** Stop a specific SFX (useful for looping ambience). */
+    /** Stop a specific SFX. */
     stopSfx(alias: Sfx): void {
         try {
             sound.stop(alias);
-        } catch {
-            // already stopped or not loaded
-        }
+        } catch { /* noop */ }
     },
 
-    /** Stop ALL sounds (music + sfx). */
+    /** Stop ALL sounds. */
     stopAll(): void {
         sound.stopAll();
         _currentMusic = null;
     },
 
-    /** Global volume (0–1) for music. */
-    setMusicVolume(vol: number): void {
-        if (_currentMusic) {
-            try {
-                const instance = sound.find(_currentMusic);
-                if (instance) instance.volume = vol;
-            } catch { /* noop */ }
+    /** Stop all currently playing SFX (ones that are not the current music). */
+    stopAllSfx(): void {
+        const musicAlias = _currentMusic;
+        // This is a brutal way because @pixi/sound doesn't provide a list of playing SFX-only instances
+        // easily without tracking them manually.
+        sound.stopAll();
+        if (musicAlias) {
+            this.playMusic(musicAlias);
         }
+    },
+
+    // -------------------------------------------------------
+    // VOLUME SETTERS
+    // -------------------------------------------------------
+
+    setMasterVolume(vol: number): void {
+        _masterVol = Math.max(0, Math.min(1, vol));
+        sound.volumeAll = _masterVol;
+        storage.set(STORAGE_KEY_MASTER, _masterVol);
+    },
+
+    setMusicVolume(vol: number): void {
+        _musicVol = Math.max(0, Math.min(1, vol));
+        if (_currentMusic) {
+            const instance = sound.find(_currentMusic);
+            if (instance) instance.volume = _musicVol;
+        }
+        storage.set(STORAGE_KEY_MUSIC, _musicVol);
+    },
+
+    setSfxVolume(vol: number): void {
+        _sfxVol = Math.max(0, Math.min(1, vol));
+        storage.set(STORAGE_KEY_SFX, _sfxVol);
     },
 };
 

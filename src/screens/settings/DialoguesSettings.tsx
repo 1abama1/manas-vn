@@ -27,6 +27,7 @@ export default function DialoguesSettings() {
                     defaultValue={typewriterDelay}
                     getAriaValueText={(value) => `${value}ms`}
                     step={10}
+                    size="sm"
                     marks={[
                         {
                             value: 0,
@@ -47,6 +48,7 @@ export default function DialoguesSettings() {
                     onChange={(_, value) => {
                         setTypewriterDelay((value as number) || 0);
                     }}
+                    sx={{ maxWidth: 350 }}
                 />
             </Box>
             <Box>
@@ -67,6 +69,7 @@ export default function DialoguesSettings() {
                     defaultValue={autoTime}
                     getAriaValueText={(value) => `${value}s`}
                     step={1}
+                    size="sm"
                     marks={[
                         {
                             value: 1,
@@ -83,6 +86,7 @@ export default function DialoguesSettings() {
                     disabled={!autoEnabled}
                     valueLabelFormat={(index) => index + "s"}
                     onChange={(_, value) => setAutoTime(value as number)}
+                    sx={{ maxWidth: 350 }}
                 />
             </Box>
         </>

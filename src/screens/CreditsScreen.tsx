@@ -1,7 +1,8 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { MAIN_MENU_ROUTE } from "../constans";
+import AudioManager from "../utils/AudioManager";
 import "./CreditsScreen.css";
 
 export default function CreditsScreen() {
@@ -10,6 +11,13 @@ export default function CreditsScreen() {
     const [holdProgress, setHoldProgress] = useState(0);
     const [isHolding, setIsHolding] = useState(false);
     const progressInterval = useRef<NodeJS.Timeout | null>(null);
+
+    useEffect(() => {
+        // Stop music when leaving the credits screen
+        return () => {
+            AudioManager.stopMusic(1000); // Optional fade out
+        };
+    }, []);
 
     const startHolding = () => {
         setIsHolding(true);

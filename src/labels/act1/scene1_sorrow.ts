@@ -32,6 +32,8 @@ export const act1 = newLabel(
         },
         async () => {
             await showImage("bg", Backgrounds.FALCON_DREAM, { width: 1920, height: 1080 });
+            // 🔊 Stop hearth fire before dream sequences
+            AudioManager.stopSfx(Sfx.HEARTH_FIRE);
             // 🎵 Dream: heartbeat + rising low drone
             AudioManager.playMusic(Music.ACT1_DREAM);
             // 🔊 White falcon wingbeat and screech

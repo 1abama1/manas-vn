@@ -56,6 +56,9 @@ export const act3_scene2 = newLabel(
             // 🔊 Retreating hoofbeats fading into distance
             AudioManager.playSfx(Sfx.KONURBAY_RETREAT);
 
+            // 🔊 Stop battle sounds as the scene transitions to aftermath
+            AudioManager.stopSfx(Sfx.BATTLE_CHAOS);
+            AudioManager.stopSfx(Sfx.ARROW_VOLLEY);
             narration.dialogue = {
                 character: storyteller,
                 text: "act3_scene2_storyteller_3"

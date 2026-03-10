@@ -24,6 +24,7 @@ import LanguageSettings from "./settings/LanguageSettings";
 import OpenHistorySettingButton from "./settings/OpenHistorySettingButton";
 import SaveLoadSettingButtons from "./settings/SaveLoadSettingButtons";
 import SkipSettingToggle from "./settings/SkipSettingToggle";
+import SoundSettings from "./settings/SoundSettings";
 
 export default function Settings() {
     const open = useSettingsScreenStore((state) => state.open);
@@ -47,7 +48,7 @@ export default function Settings() {
             onClose={editOpen}
             sx={{
                 "& .MuiDrawer-content": {
-                    width: smScreen ? "100%" : 600,
+                    width: smScreen ? "100%" : 650,
                     maxWidth: "100%",
                 },
             }}
@@ -102,6 +103,11 @@ export default function Settings() {
                         {t("dialogues")}
                     </Typography>
                     <DialoguesSettings />
+
+                    <Typography level='title-md' fontWeight='bold'>
+                        {t("audio")}
+                    </Typography>
+                    <SoundSettings />
 
                     <Typography level='title-md' fontWeight='bold'>
                         {t("display")}

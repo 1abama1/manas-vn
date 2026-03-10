@@ -148,6 +148,10 @@
         "credits_name_sound_assistant": "Токтогулов Атай",
         "credits_thanks_playing": "Спасибо за игру!",
         "credits_hold_to_skip": "Зажмите, чтобы пропустить (2 сек.)",
-        "game_title": "МАНАС"
+        "game_title": "МАНАС",
+        "audio": "Звук",
+        "master_volume": "Общая громкость",
+        "music_volume": "Громкость музыки",
+        "sfx_volume": "Громкость спецэффектов"
     }
 }

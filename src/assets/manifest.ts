@@ -200,59 +200,59 @@ const manifest: AssetsManifest = {
             name: "audio_act1",
             assets: [
                 // --- Music ---
-                { alias: "music_act1_komuz_sad", src: "/manas/audio/door-knock-screen-door-2_m10pgg4d.mp3" },
-                { alias: "music_act1_dream", src: "/manas/audio/door-knock-screen-door-2_m10pgg4d.mp3" },
-                { alias: "music_act1_birth_flash", src: "/manas/audio/door-knock-screen-door-2_m10pgg4d.mp3" },
+                { alias: "music_act1_komuz_sad", src: "/manas/audio/act1/акт 1, сцена 1 - комуз.mp3" },
+                { alias: "music_act1_dream", src: "/manas/audio/act1/акт 1, сцена 1 - сон.mp3" },
+                { alias: "music_act1_birth_flash", src: "/manas/audio/act1/акт 1, сцена 2 - вспышка.wav" },
                 // --- SFX ---
-                { alias: "sfx_hearth_fire", src: "/manas/audio/door-knock-screen-door-2_m10pgg4d.mp3" },
-                { alias: "sfx_eagle_screech", src: "/manas/audio/door-knock-screen-door-2_m10pgg4d.mp3" },
-                { alias: "sfx_birth_chime", src: "/manas/audio/door-knock-screen-door-2_m10pgg4d.mp3" },
-                { alias: "sfx_manas_born", src: "/manas/audio/door-knock-screen-door-2_m10pgg4d.mp3" },
-                { alias: "sfx_spy_sting", src: "/manas/audio/door-knock-screen-door-2_m10pgg4d.mp3" },
-                { alias: "sfx_knife_draw", src: "/manas/audio/door-knock-screen-door-2_m10pgg4d.mp3" },
-                { alias: "sfx_spear_catch", src: "/manas/audio/door-knock-screen-door-2_m10pgg4d.mp3" },
+                { alias: "sfx_hearth_fire", src: "/manas/audio/act1/акт 1, сцена 1 - фон.wav" },
+                { alias: "sfx_eagle_screech", src: "/manas/audio/act1/акт 1, сцена 1 - белый сокол2.wav" },
+                { alias: "sfx_birth_chime", src: "/manas/audio/act1/акт 1, сцена 2 - вспышка.wav" },
+                { alias: "sfx_manas_born", src: "/manas/audio/act1/акт 1, сцена 2 - крик Манаса.mp3" },
+                { alias: "sfx_spy_sting", src: "/manas/audio/act1/акт_1,_сцена_2_появление_лазутчика.mp3" },
+                { alias: "sfx_knife_draw", src: "/manas/audio/act1/акт 1, сцена 2 - схватка.wav" },
+                { alias: "sfx_spear_catch", src: "/manas/audio/act1/акт 1, сцена 2 - схватка2.mp3" },
             ],
         },
         {
             name: "audio_act2",
             assets: [
                 // --- Music ---
-                { alias: "music_act2_komuz_triumph", src: "/manas/audio/door-knock-screen-door-2_m10pgg4d.mp3" },
-                { alias: "music_act2_march", src: "/manas/audio/door-knock-screen-door-2_m10pgg4d.mp3" },
+                { alias: "music_act2_komuz_triumph", src: "/manas/audio/act2/акт 2, сцена 1 - комуз.mp3" },
+                { alias: "music_act2_march", src: "/manas/audio/act2/акт_2,_сцена_2_выступление_войска2.mp3" },
                 // --- SFX ---
-                { alias: "sfx_crowd_chant", src: "/manas/audio/door-knock-screen-door-2_m10pgg4d.mp3" },
-                { alias: "sfx_sword_clash", src: "/manas/audio/door-knock-screen-door-2_m10pgg4d.mp3" },
-                { alias: "sfx_war_horn", src: "/manas/audio/door-knock-screen-door-2_m10pgg4d.mp3" },
-                { alias: "sfx_cavalry_charge", src: "/manas/audio/door-knock-screen-door-2_m10pgg4d.mp3" },
+                { alias: "sfx_crowd_chant", src: "/manas/audio/act2/акт 2, сцена 2 - выступление войска.mp3" },
+                { alias: "sfx_sword_clash", src: "/manas/audio/act2/акт 2, сцена 2 - клятва.mp3" },
+                { alias: "sfx_war_horn", src: "/manas/audio/act2/акт 2, сцена 2 - боевой рог.mp3" },
+                { alias: "sfx_cavalry_charge", src: "/manas/audio/act2/акт_2,_сцена_2_выступление_войска2.mp3" },
             ],
         },
         {
             name: "audio_act3",
             assets: [
                 // --- Music ---
-                { alias: "music_act3_tension", src: "/manas/audio/door-knock-screen-door-2_m10pgg4d.mp3" },
-                { alias: "music_act3_battle", src: "/manas/audio/door-knock-screen-door-2_m10pgg4d.mp3" },
-                { alias: "music_act3_aftermath", src: "/manas/audio/door-knock-screen-door-2_m10pgg4d.mp3" },
+                { alias: "music_act3_tension", src: "/manas/audio/act3/акт 3, сцена 1 - комуз.wav" },
+                { alias: "music_act3_battle", src: "/manas/audio/act3/акт 3, сцена 2 - бой.mp3" },
+                { alias: "music_act3_aftermath", src: "/manas/audio/act3/акт 3, сцена 2 - бой2.mp3" }, // Fallback to a quieter battle sound or heartbeat
                 // --- SFX ---
-                { alias: "sfx_camp_ambience", src: "/manas/audio/door-knock-screen-door-2_m10pgg4d.mp3" },
-                { alias: "sfx_battle_chaos", src: "/manas/audio/door-knock-screen-door-2_m10pgg4d.mp3" },
-                { alias: "sfx_arrow_volley", src: "/manas/audio/door-knock-screen-door-2_m10pgg4d.mp3" },
-                { alias: "sfx_konurbay_retreat", src: "/manas/audio/door-knock-screen-door-2_m10pgg4d.mp3" },
-                { alias: "sfx_axe_strike", src: "/manas/audio/door-knock-screen-door-2_m10pgg4d.mp3" },
-                { alias: "sfx_ear_ring", src: "/manas/audio/door-knock-screen-door-2_m10pgg4d.mp3" },
-                { alias: "sfx_body_fall", src: "/manas/audio/door-knock-screen-door-2_m10pgg4d.mp3" },
+                { alias: "sfx_camp_ambience", src: "/manas/audio/act3/акт 3, сцена 1 - комуз.mp3" }, // Komuz has the atmosphere
+                { alias: "sfx_battle_chaos", src: "/manas/audio/act3/акт 3, сцена 2 - бой3.mp3" },
+                { alias: "sfx_arrow_volley", src: "/manas/audio/act3/акт 3, сцена 2 - бой4.mp3" },
+                { alias: "sfx_konurbay_retreat", src: "/manas/audio/act3/акт 3, сцена 2 - бегство Конурбая.mp3" },
+                { alias: "sfx_axe_strike", src: "/manas/audio/act3/акт 3, сцена 2 - коварный удар.mp3" },
+                { alias: "sfx_ear_ring", src: "/manas/audio/act3/акт 3, сцена 2 - коварный удар2.mp3" },
+                { alias: "sfx_body_fall", src: "/manas/audio/act3/акт 3, сцена 2 - падение.mp3" },
             ],
         },
         {
             name: "audio_act4",
             assets: [
                 // --- Music ---
-                { alias: "music_act4_komuz_grief", src: "/manas/audio/door-knock-screen-door-2_m10pgg4d.mp3" },
-                { alias: "music_act4_epilogue", src: "/manas/audio/door-knock-screen-door-2_m10pgg4d.mp3" },
+                { alias: "music_act4_komuz_grief", src: "/manas/audio/act4/акт 4, сцена 1 - комуз.mp3" },
+                { alias: "music_act4_epilogue", src: "/manas/audio/act4/акт 4, сцена 2 - эпилог.mp3" },
                 // --- SFX ---
-                { alias: "sfx_heavy_breath", src: "/manas/audio/door-knock-screen-door-2_m10pgg4d.mp3" },
-                { alias: "sfx_wind_howl", src: "/manas/audio/door-knock-screen-door-2_m10pgg4d.mp3" },
-                { alias: "sfx_final_drum", src: "/manas/audio/door-knock-screen-door-2_m10pgg4d.mp3" },
+                { alias: "sfx_heavy_breath", src: "/manas/audio/act4/акт 4, сцена 1 - дыхание.mp3" },
+                { alias: "sfx_wind_howl", src: "/manas/audio/act4/акт 4, сцена 1 - тишина.mp3" },
+                { alias: "sfx_final_drum", src: "/manas/audio/act4/акт 4, сцена 2 - финальный аккорд.mp3" },
             ],
         },
     ],

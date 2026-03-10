@@ -11,6 +11,8 @@ export const act4_scene1 = newLabel(
     [
         async () => {
             await showImage("bg", Backgrounds.LAST_WILL, { width: 1920, height: 1080 });
+            // 🔊 Final act clean up
+            AudioManager.stopAllSfx();
             // 🎵 Mournful komuz – Kambarkan minor
             AudioManager.playMusic(Music.ACT4_KOMUZ_GRIEF, 0.5);
 
@@ -79,8 +81,9 @@ export const act4_scene1 = newLabel(
         async () => {
             await moveOut("manas", { direction: "down" });
             await moveOut("kanykei", { direction: "down" });
-            // 🔊 Sudden silence, then mournful wind
+            // 🔊 Stop heavy breathing and music: Manas has passed
             AudioManager.stopMusic();
+            AudioManager.stopSfx(Sfx.HEAVY_BREATH);
             AudioManager.playSfx(Sfx.WIND_HOWL);
 
             narration.dialogue = {

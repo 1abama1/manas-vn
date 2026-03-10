@@ -148,6 +148,10 @@
 		"credits_name_sound_assistant": "Toktogulov Atai",
 		"credits_thanks_playing": "Thanks for playing!",
 		"credits_hold_to_skip": "Hold to skip (2 sec.)",
-		"game_title": "MANAS"
+		"game_title": "MANAS",
+		"audio": "Audio",
+		"master_volume": "Master Volume",
+		"music_volume": "Music Volume",
+		"sfx_volume": "SFX Volume"
 	}
 }

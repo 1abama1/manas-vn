@@ -12,6 +12,8 @@ export const act3 = newLabel(
     [
         async () => {
             await showImage("bg", Backgrounds.BEIJING_WALLS, { width: 1920, height: 1080 });
+            // 🔊 Clean up any lingering act 2 noises (cavalry, march etc.)
+            AudioManager.stopAllSfx();
             // 🎵 Tense, fast-tempo komuz with growing percussion
             AudioManager.playMusic(Music.ACT3_TENSION);
             // 🔊 Camp sounds: horses, clanking metal

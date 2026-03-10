@@ -55,6 +55,8 @@ export const act2 = newLabel(
         async () => {
             await moveOut("manas", { direction: "down" });
             await moveOut("bakai", { direction: "down" });
+            // 🔊 Stop crowd noise when returning to the yurt
+            AudioManager.stopSfx(Sfx.CROWD_CHANT);
 
             await showImage("bg", Backgrounds.YURTA_NIGHT, { width: 1920, height: 1080 });
 
