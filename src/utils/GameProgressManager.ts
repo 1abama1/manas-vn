@@ -8,4 +8,5 @@ export class GameProgressManager {
     static hasCodex(codexId: string): boolean {
         return storage.get(codexId) === true;
     }
+
 }
