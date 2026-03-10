@@ -1,6 +1,9 @@
 import { moveIn, moveOut, narration, newLabel, showImage } from "@drincs/pixi-vn";
+import { Assets } from "pixi.js";
 import { Backgrounds, Emotions } from "../../values/assets";
 import { kanykei, manas, storyteller } from "../../values/characters";
+import AudioManager from "../../utils/AudioManager";
+import { Music, Sfx } from "../../values/sounds";
 import { act4_scene2 } from "./scene2_immortality";
 
 export const act4_scene1 = newLabel(
@@ -8,6 +11,8 @@ export const act4_scene1 = newLabel(
     [
         async () => {
             await showImage("bg", Backgrounds.LAST_WILL, { width: 1920, height: 1080 });
+            // 🎵 Mournful komuz – Kambarkan minor
+            AudioManager.playMusic(Music.ACT4_KOMUZ_GRIEF, 0.5);
 
             narration.dialogue = {
                 character: storyteller,
@@ -32,6 +37,9 @@ export const act4_scene1 = newLabel(
                 },
                 { direction: "right" }
             );
+
+            // 🔊 Heavy, laboured dying breaths
+            AudioManager.playSfx(Sfx.HEAVY_BREATH, 0.6);
 
             narration.dialogue = {
                 character: kanykei,
@@ -71,6 +79,9 @@ export const act4_scene1 = newLabel(
         async () => {
             await moveOut("manas", { direction: "down" });
             await moveOut("kanykei", { direction: "down" });
+            // 🔊 Sudden silence, then mournful wind
+            AudioManager.stopMusic();
+            AudioManager.playSfx(Sfx.WIND_HOWL);
 
             narration.dialogue = {
                 character: storyteller,
@@ -80,5 +91,11 @@ export const act4_scene1 = newLabel(
         async (props) => {
             return await narration.jump(act4_scene2, props);
         }
-    ]
+    ],
+    // act4 has no onLoadingLabel in the original, add bundle preload
+    {
+        onLoadingLabel: () => {
+            Assets.backgroundLoadBundle(["audio_act4"]);
+        },
+    }
 );
