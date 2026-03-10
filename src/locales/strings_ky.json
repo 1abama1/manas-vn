@@ -139,9 +139,13 @@
         "you_sure_to_return_main_menu": "Башкы менюга чын эле кайткыңыз келеби? Бардык сакталбаган прогресс жоголот.",
         "download_locale": "Котормо файлын түшүрүү",
         "credits_developer_teamlead": "Иштеп чыгуучу жана Тимлид",
+        "credits_name_developer_teamlead": "Именов Шахмухамад",
         "credits_artist": "Сүрөтчү",
+        "credits_name_artist": "Сүрөтчүнүн аты",
         "credits_sound_director": "Үн оператору",
+        "credits_name_sound_director": "Үн операторунун аты",
         "credits_sound_assistant": "Үн операторунун жардамчысы",
+        "credits_name_sound_assistant": "Жардамчынын аты",
         "credits_thanks_playing": "Оюн үчүн рахмат!",
         "credits_hold_to_skip": "Өткөрүп жиберүү үчүн басып туруңуз (2 сек.)"
     }

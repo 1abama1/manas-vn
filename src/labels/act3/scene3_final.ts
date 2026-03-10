@@ -1,6 +1,8 @@
 import { moveIn, moveOut, narration, newLabel, showImage } from "@drincs/pixi-vn";
 import { Backgrounds, Emotions } from "../../values/assets";
 import { konurbay, storyteller } from "../../values/characters";
+import AudioManager from "../../utils/AudioManager";
+import { Sfx } from "../../values/sounds";
 import { act4 } from "../act4";
 
 export const act3_scene3 = newLabel(
@@ -34,10 +36,18 @@ export const act3_scene3 = newLabel(
                 character: storyteller,
                 text: "act3_scene3_storyteller_2"
             };
+            // 🔊 Dull, meaty axe blow to the back of Manas's neck
+            AudioManager.playSfx(Sfx.AXE_STRIKE);
+            // 🔊 High-pitched ear-ring immediately after impact
+            AudioManager.playSfx(Sfx.EAR_RING);
         },
         async () => {
             await showImage("bg", Backgrounds.BLACK, { width: 1920, height: 1080 });
             await moveOut("konurbay", { direction: "right" });
+            // 🔊 Heavy body hitting the ground
+            AudioManager.playSfx(Sfx.BODY_FALL);
+            // 🎵 Sudden silence – then wind howl of mourning
+            AudioManager.stopMusic();
 
             narration.dialogue = {
                 character: storyteller,

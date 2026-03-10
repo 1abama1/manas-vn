@@ -1,6 +1,8 @@
 import { moveIn, moveOut, narration, newLabel, showImage } from "@drincs/pixi-vn";
 import { Backgrounds, Emotions } from "../../values/assets";
 import { almambet, manas, storyteller } from "../../values/characters";
+import AudioManager from "../../utils/AudioManager";
+import { Music, Sfx } from "../../values/sounds";
 import { act3 } from "../act3";
 
 export const act2_scene2 = newLabel(
@@ -23,6 +25,8 @@ export const act2_scene2 = newLabel(
                 },
                 { direction: "right" }
             );
+            // 🔊 Ringing clash of crossing blades — the oath of brotherhood
+            AudioManager.playSfx(Sfx.SWORD_CLASH);
 
             narration.dialogue = {
                 character: almambet,
@@ -49,6 +53,11 @@ export const act2_scene2 = newLabel(
             await moveOut("manas", { direction: "down" });
 
             await showImage("bg", Backgrounds.BLACK, { width: 1920, height: 1080 });
+            // 🔊 War horn rally + growing cavalry thunder
+            AudioManager.playSfx(Sfx.WAR_HORN);
+            AudioManager.playSfx(Sfx.CAVALRY_CHARGE);
+            // 🎵 Army march music
+            AudioManager.playMusic(Music.ACT2_MARCH);
 
             narration.dialogue = {
                 character: storyteller,

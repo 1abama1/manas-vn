@@ -2,12 +2,16 @@ import { moveIn, moveOut, narration, newLabel, showImage } from "@drincs/pixi-vn
 import { CREDITS_ROUTE } from "../../constans";
 import { Backgrounds, Emotions } from "../../values/assets";
 import { storyteller } from "../../values/characters";
+import AudioManager from "../../utils/AudioManager";
+import { Music, Sfx } from "../../values/sounds";
 
 export const act4_scene2 = newLabel(
     "act4_scene2",
     [
         async () => {
             await showImage("bg", Backgrounds.IMMORTALITY, { width: 1920, height: 1080 });
+            // 🎵 Solemn komuz + strings + drums – the immortality epilogue
+            AudioManager.playMusic(Music.ACT4_EPILOGUE, 0.6);
 
             narration.dialogue = {
                 character: storyteller,
@@ -47,6 +51,9 @@ export const act4_scene2 = newLabel(
             narration.dialogue = "act4_sys_game_over";
         },
         async (props) => {
+            // 🔊 One mighty drum hit fading to echo – the game's final sound
+            AudioManager.stopMusic(1500);
+            AudioManager.playSfx(Sfx.FINAL_DRUM);
             props.navigate(CREDITS_ROUTE);
         }
     ]

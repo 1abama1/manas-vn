@@ -139,9 +139,13 @@
         "you_sure_to_return_main_menu": "Вернуться в меню? Весь несохраненный прогресс будет потерян.",
         "download_locale": "Скачать файл перевода",
         "credits_developer_teamlead": "Разработчик и Тимлид",
+        "credits_name_developer_teamlead": "Именов Шахмухамад",
         "credits_artist": "Художник",
+        "credits_name_artist": "Имя Художника",
         "credits_sound_director": "Звукорежиссер",
+        "credits_name_sound_director": "Имя Звукорежиссера",
         "credits_sound_assistant": "Помощник Звукорежиссера",
+        "credits_name_sound_assistant": "Имя Помощника",
         "credits_thanks_playing": "Спасибо за игру!",
         "credits_hold_to_skip": "Зажмите, чтобы пропустить (2 сек.)"
     }

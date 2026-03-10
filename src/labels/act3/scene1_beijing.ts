@@ -2,6 +2,8 @@ import { narration, newChoiceOption, newLabel, showImage, moveIn, moveOut } from
 import { Assets } from "pixi.js";
 import { Backgrounds, Emotions } from "../../values/assets";
 import { manas, storyteller } from "../../values/characters";
+import AudioManager from "../../utils/AudioManager";
+import { Music, Sfx } from "../../values/sounds";
 import { act3_branch_a } from "./branch_a";
 import { act3_branch_b } from "./branch_b";
 
@@ -10,6 +12,10 @@ export const act3 = newLabel(
     [
         async () => {
             await showImage("bg", Backgrounds.BEIJING_WALLS, { width: 1920, height: 1080 });
+            // 🎵 Tense, fast-tempo komuz with growing percussion
+            AudioManager.playMusic(Music.ACT3_TENSION);
+            // 🔊 Camp sounds: horses, clanking metal
+            AudioManager.playSfx(Sfx.CAMP_AMBIENCE, 0.5);
 
             narration.dialogue = {
                 character: storyteller,
@@ -53,7 +59,7 @@ export const act3 = newLabel(
     ],
     {
         onLoadingLabel: () => {
-            Assets.backgroundLoadBundle(["act3"]);
+            Assets.backgroundLoadBundle(["act3", "audio_act3"]);
         },
     }
 );

@@ -2,6 +2,8 @@ import { narration, newChoiceOption, newLabel, showImage, moveIn, moveOut } from
 import { Assets } from "pixi.js";
 import { Backgrounds, Emotions } from "../../values/assets";
 import { manas, bakai, storyteller } from "../../values/characters";
+import AudioManager from "../../utils/AudioManager";
+import { Music, Sfx } from "../../values/sounds";
 import { act2_branch_a } from "./branch_a";
 import { act2_branch_b } from "./branch_b";
 
@@ -10,6 +12,10 @@ export const act2 = newLabel(
     [
         async () => {
             await showImage("bg", Backgrounds.STEPPE_ARMY, { width: 1920, height: 1080 });
+            // 🎵 Triumphant energetic komuz chord – the moment of Khan proclamation
+            AudioManager.playMusic(Music.ACT2_KOMUZ_TRIUMPH);
+            // 🔊 Thousands chanting "Manas! Manas!"
+            AudioManager.playSfx(Sfx.CROWD_CHANT);
 
             narration.dialogue = {
                 character: storyteller,
@@ -67,7 +73,7 @@ export const act2 = newLabel(
     ],
     {
         onLoadingLabel: () => {
-            Assets.backgroundLoadBundle(["act2"]);
+            Assets.backgroundLoadBundle(["act2", "audio_act2"]);
         },
     }
 );

@@ -139,9 +139,13 @@
 		"you_sure_to_return_main_menu": "Are you sure you want to return to the main menu? All unsaved progress will be lost.",
 		"download_locale": "Download File to Translate",
 		"credits_developer_teamlead": "Developer and Team Lead",
+		"credits_name_developer_teamlead": "Imenov Shakhmukhamad",
 		"credits_artist": "Artist",
+		"credits_name_artist": "Artist Name",
 		"credits_sound_director": "Sound Director",
+		"credits_name_sound_director": "Sound Director Name",
 		"credits_sound_assistant": "Sound Assistant",
+		"credits_name_sound_assistant": "Sound Assistant Name",
 		"credits_thanks_playing": "Thanks for playing!",
 		"credits_hold_to_skip": "Hold to skip (2 sec.)"
 	}
