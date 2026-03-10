@@ -22,7 +22,6 @@ import ChoiceMenu from "./ChoiceMenu";
 export default function NarrationScreen() {
     const {
         height: cardHeightTemp,
-        setHeight: setCardHeight,
         imageWidth: cardImageWidth,
         setImageWidth: setCardImageWidth,
     } = useDialogueCardStore(useShallow((state) => state));
@@ -34,13 +33,6 @@ export default function NarrationScreen() {
             hidden
                 ? `motion-opacity-out-0 motion-translate-y-out-[50%]`
                 : `motion-opacity-in-0 motion-translate-y-in-[50%]`,
-        [hidden]
-    );
-    const sliderVarians = useMemo(
-        () =>
-            hidden
-                ? `motion-duration-200/opacity motion-opacity-out-0 motion-translate-y-out-[25%]`
-                : `motion-opacity-in-0 motion-translate-y-in-[25%]`,
         [hidden]
     );
     const cardImageVarians = useMemo(
@@ -60,27 +52,6 @@ export default function NarrationScreen() {
             }}
         >
             <Box sx={{ flex: 1, minHeight: 0, display: "flex", flexDirection: "column" }}>
-                <SliderResizer
-                    orientation='vertical'
-                    max={90}
-                    min={10}
-                    value={cardHeight}
-                    onChange={(_, value) => {
-                        if (typeof value === "number") {
-                            setCardHeight(value);
-                        }
-                    }}
-                    stackProps={{
-                        sx: {
-                            top: 0,
-                            paddingBottom: { xs: "0.9rem", sm: "1rem", md: "1.1rem", lg: "1.3rem", xl: "1.4rem" },
-                        },
-                    }}
-                    sx={{
-                        pointerEvents: !hidden ? "auto" : "none",
-                    }}
-                    className={sliderVarians}
-                />
                 <Box sx={{ flex: 1, minHeight: 0 }}>
                     <ChoiceMenu />
                 </Box>
@@ -192,6 +163,7 @@ function NarrationScreenText({ paragraphRef }: { paragraphRef: RefObject<HTMLDiv
     const typewriterDelay = useTypewriterStore(useShallow((state) => state.delay));
     const startTypewriter = useTypewriterStore(useShallow((state) => state.start));
     const endTypewriter = useTypewriterStore(useShallow((state) => state.end));
+    const restoreDelay = useTypewriterStore(useShallow((state) => state.restoreDelay));
     const { data: { animatedText, text } = {} } = useQueryDialogue();
     const { mode } = useColorScheme();
 
@@ -228,7 +200,10 @@ function NarrationScreenText({ paragraphRef }: { paragraphRef: RefObject<HTMLDiv
                     rehypePlugins={[rehypeRaw]}
                     delay={typewriterDelay}
                     motionProps={{
-                        onAnimationStart: startTypewriter,
+                        onAnimationStart: () => {
+                            restoreDelay();
+                            startTypewriter();
+                        },
                         onAnimationComplete: (definition: "visible" | "hidden") => {
                             if (definition == "visible") {
                                 endTypewriter();

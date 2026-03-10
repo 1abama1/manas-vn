@@ -7,6 +7,7 @@ import useGameSaveScreenStore from "../stores/useGameSaveScreenStore";
 import useHistoryScreenStore from "../stores/useHistoryScreenStore";
 import useSettingsScreenStore from "../stores/useSettingsScreenStore";
 import useSkipStore from "../stores/useSkipStore";
+import useTypewriterStore from "../stores/useTypewriterStore";
 import { saveGameToIndexDB } from "../utils/save-utility";
 import useEventListener from "./useKeyDetector";
 import useNarrationFunctions from "./useNarrationFunctions";
@@ -69,12 +70,22 @@ export default function useKeyboardDetector() {
                         ) {
                             return;
                         }
+                        event.preventDefault(); // Prevent page scrolling on Space
+
+                        // ── VN mechanic ───────────────────────────────────────
+                        const { inProgress, skipToEnd } = useTypewriterStore.getState();
+                        if (inProgress) {
+                            // Text still printing → show all at once
+                            skipToEnd();
+                            break;
+                        }
+                        // ─────────────────────────────────────────────────────
+
                         if (canContinue) {
                             if (skipEnabled) {
                                 setSkipEnabled(false);
                             }
                             goNext();
-                            event.preventDefault(); // Prevent page scrolling on Space
                         }
                     }
                     break;

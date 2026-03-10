@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import useTypewriterStore from "../stores/useTypewriterStore";
 import useNarrationFunctions from "./useNarrationFunctions";
 import { useQueryCanGoNext } from "./useQueryInterface";
 import useGameSaveScreenStore from "../stores/useGameSaveScreenStore";
@@ -47,6 +48,15 @@ export default function useClickDetector() {
             ) {
                 return;
             }
+
+            // ── VN mechanic ───────────────────────────────────────
+            const { inProgress, skipToEnd } = useTypewriterStore.getState();
+            if (inProgress) {
+                // Text is still typing → show it all at once
+                skipToEnd();
+                return;
+            }
+            // ─────────────────────────────────────────────────────
 
             if (canContinue) {
                 if (skipEnabled) {
