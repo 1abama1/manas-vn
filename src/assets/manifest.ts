@@ -23,7 +23,7 @@ const manifest: AssetsManifest = {
             assets: [
                 {
                     alias: "bg01-hallway",
-                    src: "/assets/mainmenu.png",
+                    src: "/manas/mainmenu.png",
                 },
             ],
         },
@@ -59,7 +59,7 @@ const manifest: AssetsManifest = {
                 },
                 {
                     alias: "bg_white",
-                    src: "/assets/bg_white.webp",
+                    src: "/manas/black.png", // Fallback to black for now since white is missing
                 },
 
                 // === Characters ===

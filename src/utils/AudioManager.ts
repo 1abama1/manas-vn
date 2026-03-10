@@ -26,11 +26,18 @@ const AudioManager = {
     playMusic(alias: Music, volume = 0.6): void {
         if (_currentMusic === alias) return;
         this.stopMusic();
+
+        // Check if sound exists in manifest/loader to prevent assertion errors
+        if (!sound.exists(alias)) {
+            console.warn(`[AudioManager] Music not loaded/found: ${alias}`);
+            return;
+        }
+
         try {
             sound.play(alias, { loop: true, volume });
             _currentMusic = alias;
-        } catch {
-            console.warn(`[AudioManager] Music not loaded yet: ${alias}`);
+        } catch (e) {
+            console.error(`[AudioManager] Error playing music ${alias}:`, e);
         }
     },
 
@@ -68,10 +75,15 @@ const AudioManager = {
 
     /** Play a one-shot sound effect. */
     playSfx(alias: Sfx, volume = 1.0): void {
+        if (!sound.exists(alias)) {
+            console.warn(`[AudioManager] SFX not loaded/found: ${alias}`);
+            return;
+        }
+
         try {
             sound.play(alias, { volume });
-        } catch {
-            console.warn(`[AudioManager] SFX not loaded yet: ${alias}`);
+        } catch (e) {
+            console.error(`[AudioManager] Error playing SFX ${alias}:`, e);
         }
     },
 
