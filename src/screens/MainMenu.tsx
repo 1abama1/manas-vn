@@ -28,17 +28,16 @@ export default function MainMenu() {
 
     useEffect(() => {
         editHideInterface(false);
-        let bg = new ImageSprite({ width: 1920, height: 1080 }, "background_main_menu");
+        const bg = new ImageSprite({ width: 1920, height: 1080 }, "background_main_menu");
         bg.load();
-        let layer = canvas.getLayer(CANVAS_UI_LAYER_NAME);
-        if (layer) {
-            layer.addChild(bg);
-        }
+        const layer = canvas.getLayer(CANVAS_UI_LAYER_NAME);
+        layer?.addChild(bg);
 
         return () => {
+            bg.destroy();
             canvas.getLayer(CANVAS_UI_LAYER_NAME)?.removeChildren();
         };
-    });
+    }, []);
 
     return (
         <Box sx={{ position: "relative", height: "100%", width: "100%" }}>

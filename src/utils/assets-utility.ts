@@ -11,7 +11,12 @@ export async function defineAssets() {
     await Assets.init({ manifest });
 
     // The game will not start until these asserts are loaded.
-    await Assets.loadBundle(MAIN_MENU_ROUTE);
+    try {
+        await Assets.loadBundle(MAIN_MENU_ROUTE);
+    } catch (error) {
+        console.error("[Assets] Failed to load main menu bundle:", error);
+        throw new Error("Не удалось загрузить ресурсы. Проверьте соединение.");
+    }
 
     // The game will start immediately, but these asserts will be loaded in the background.
     const backgroundBundles = manifest.bundles

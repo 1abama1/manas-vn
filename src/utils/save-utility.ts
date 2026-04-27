@@ -48,10 +48,11 @@ export async function saveGameToIndexDB(
         }
     }
     await putRowIntoIndexDB(INDEXED_DB_SAVE_TABLE, item);
-    if (item.id) {
-        return item as GameSaveData & { id: number };
+    const saved = await getLastSaveFromIndexDB();
+    if (!saved) {
+        throw new Error("[SaveSystem] Failed to retrieve save after write");
     }
-    return (await getLastSaveFromIndexDB()) as GameSaveData & { id: number };
+    return saved;
 }
 
 export async function getSaveFromIndexDB(id: number): Promise<(GameSaveData & { id: number }) | null> {

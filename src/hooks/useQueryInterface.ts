@@ -1,5 +1,5 @@
 import { CharacterInterface, narration, stepHistory } from "@drincs/pixi-vn";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 
 export const INTERFACE_DATA_USE_QUEY_KEY = "interface_data_use_quey_key";
@@ -45,18 +45,18 @@ type DialogueModel = {
 const DIALOGUE_USE_QUEY_KEY = "dialogue_use_quey_key";
 export function useQueryDialogue() {
     const { t, i18n } = useTranslation(["narration"]);
-    const queryClient = useQueryClient();
 
     return useQuery<DialogueModel>({
         queryKey: [INTERFACE_DATA_USE_QUEY_KEY, DIALOGUE_USE_QUEY_KEY, i18n.language],
-        queryFn: async ({ queryKey }) => {
-            let dialogue = narration.dialogue;
+        queryFn: async () => {
+            const dialogue = narration.dialogue;
             let text = dialogue?.text;
             if (Array.isArray(text)) {
                 text = text.map((text) => t(text)).join(" ");
             } else if (typeof text === "string") {
                 text = t(text);
             }
+
             let character = dialogue?.character;
             if (typeof character === "string") {
                 character = {
@@ -66,30 +66,13 @@ export function useQueryDialogue() {
             } else if (character) {
                 character = {
                     ...character,
-                    id: character.id,
                     name: character.name ? t(character.name) : undefined,
                     surname: character.surname ? t(character.surname) : undefined,
-                    color: character.color,
-                    icon: character.icon,
                 } as CharacterInterface;
             }
 
-            let prevData = queryClient.getQueryData<DialogueModel>(queryKey) || {};
-            let oldText = (prevData.text || "") + (prevData.animatedText || "");
-            if (text && character?.id === prevData?.character?.id && text.startsWith(oldText)) {
-                let newText = text.slice(oldText.length);
-                if (!newText && oldText && character === prevData?.character) {
-                    return prevData;
-                }
-                return {
-                    animatedText: newText,
-                    text: oldText,
-                    character: character,
-                };
-            }
-
             return {
-                animatedText: text,
+                text: text,
                 character: character,
             };
         },

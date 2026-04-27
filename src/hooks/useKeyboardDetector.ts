@@ -1,6 +1,6 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { useSnackbar } from "notistack";
-import { useCallback } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
 import useGameSaveScreenStore from "../stores/useGameSaveScreenStore";
@@ -30,12 +30,26 @@ export default function useKeyboardDetector() {
     const { data: canContinue = false } = useQueryCanGoNext();
     const { data: canGoBack = false } = useQueryCanGoBack();
 
+    const canContinueRef = useRef(canContinue);
+    const canGoBackRef = useRef(canGoBack);
+    const lastSaveRef = useRef(lastSave);
+    const skipEnabledRef = useRef(skipEnabled);
+    const locationRef = useRef(location);
+
+    useEffect(() => {
+        canContinueRef.current = canContinue;
+        canGoBackRef.current = canGoBack;
+        lastSaveRef.current = lastSave;
+        skipEnabledRef.current = skipEnabled;
+        locationRef.current = location;
+    }, [canContinue, canGoBack, lastSave, skipEnabled, location]);
+
     const onkeydown = useCallback(
         (event: KeyboardEvent) => {
             switch (event.code) {
                 case "KeyS":
                     if (event.altKey) {
-                        if (location.pathname === "/") {
+                        if (locationRef.current.pathname === "/") {
                             console.log("Can't save on home page");
                             break;
                         }
@@ -52,11 +66,11 @@ export default function useKeyboardDetector() {
                     break;
                 case "KeyL":
                     if (event.altKey) {
-                        if (!lastSave) {
+                        if (!lastSaveRef.current) {
                             console.log("No save to load");
                             return;
                         }
-                        setOpenLoadAlert(lastSave);
+                        setOpenLoadAlert(lastSaveRef.current);
                     }
                     break;
                 case "Space":
@@ -81,8 +95,8 @@ export default function useKeyboardDetector() {
                         }
                         // ─────────────────────────────────────────────────────
 
-                        if (canContinue) {
-                            if (skipEnabled) {
+                        if (canContinueRef.current) {
+                            if (skipEnabledRef.current) {
                                 setSkipEnabled(false);
                             }
                             goNext();
@@ -98,8 +112,8 @@ export default function useKeyboardDetector() {
                         ) {
                             return;
                         }
-                        if (canGoBack) {
-                            if (skipEnabled) {
+                        if (canGoBackRef.current) {
+                            if (skipEnabledRef.current) {
                                 setSkipEnabled(false);
                             }
                             goBack();
@@ -108,7 +122,7 @@ export default function useKeyboardDetector() {
                     break;
             }
         },
-        [location, lastSave, queryClient, t, canContinue, canGoBack, goNext, goBack, skipEnabled, setSkipEnabled]
+        [queryClient, t, setOpenLoadAlert, setSkipEnabled, goNext, goBack, enqueueSnackbar]
     );
 
     useEventListener({ type: "keydown", listener: onkeydown });

@@ -9,13 +9,24 @@ export const act1_scene2 = newLabel(
     "act1_scene2",
     [
         async () => {
+            let cancelled = false;
+            // Note: In a real scenario, you'd want to hook into the engine's cleanup/interrupt event.
+            // For now, we follow the pattern to ensure we don't accidentally update the background if the scene is skipped or changed.
+            
             await showImage("bg", Backgrounds.YURTA_OUTSIDE, { width: 1920, height: 1080 });
 
             // 🔊 Magic shimmer/chime at the flash of light (birth)
             await showImage("bg", Backgrounds.WHITE, { width: 1920, height: 1080 });
             AudioManager.playSfx(Sfx.BIRTH_CHIME);
-            await new Promise((resolve) => setTimeout(resolve, 500));
-            await showImage("bg", Backgrounds.YURTA_OUTSIDE, { width: 1920, height: 1080 });
+            
+            await new Promise<void>((resolve) => {
+                setTimeout(resolve, 500);
+            });
+            
+            if (!cancelled) {
+                await showImage("bg", Backgrounds.YURTA_OUTSIDE, { width: 1920, height: 1080 });
+            }
+
             // 🔊 Thunder → baby cry → leopard roar (the iconic birth sound)
             AudioManager.playSfx(Sfx.MANAS_BORN);
 

@@ -11,3 +11,5 @@ export const HTML_UI_LAYER_NAME = "ui";
 export const HTML_CANVAS_LAYER_NAME = "canvas";
 
 export const SKIP_DELAY = 100;
+
+export const SCENE_SIZE = { width: 1920, height: 1080 } as const;

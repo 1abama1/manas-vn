@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { useShallow } from "zustand/react/shallow";
 import { SKIP_DELAY } from "../constans";
 import useAutoInfoStore from "../stores/useAutoInfoStore";
@@ -15,19 +16,24 @@ export default function useSkipAutoDetector() {
     const autoTime = useAutoInfoStore(useShallow((state) => state.time));
     const typewriterInProgress = useTypewriterStore(useShallow((state) => state.inProgress));
     const { goNext } = useNarrationFunctions();
+    const goNextRef = useRef(goNext);
 
-    useInterval(goNext, {
+    useEffect(() => {
+        goNextRef.current = goNext;
+    }, [goNext]);
+
+    useInterval(() => goNextRef.current(), {
         delay: SKIP_DELAY,
         enabled: skipEnabled,
     });
 
     useDebouncedEffect(
-        () => autoEnabled && !skipEnabled && goNext(),
+        () => autoEnabled && !skipEnabled && goNextRef.current(),
         {
             delay: autoTime * 1000,
             enabled: autoEnabled && !skipEnabled && !typewriterInProgress,
         },
-        [autoEnabled, skipEnabled, goNext]
+        [autoEnabled, skipEnabled]
     );
 
     useEventListener({

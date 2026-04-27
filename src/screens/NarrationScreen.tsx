@@ -5,8 +5,8 @@ import Card from "@mui/joy/Card";
 import CardContent from "@mui/joy/CardContent";
 import Sheet from "@mui/joy/Sheet";
 import Typography from "@mui/joy/Typography";
-import { RefObject, useCallback, useMemo, useRef } from "react";
-import Markdown from "react-markdown";
+import clsx from "clsx";
+import { RefObject, useCallback, useRef } from "react";
 import { MarkdownTypewriterHooks } from "react-markdown-typewriter";
 import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
@@ -28,17 +28,17 @@ export default function NarrationScreen() {
     const { data: { animatedText, character, text } = {} } = useQueryDialogue();
     const hidden = useInterfaceStore((state) => state.hidden || (animatedText || text ? false : true));
     const cardHeight = animatedText || text ? cardHeightTemp : 0;
-    const cardVarians = useMemo(
-        () =>
-            hidden
-                ? `motion-opacity-out-0 motion-translate-y-out-[50%]`
-                : `motion-opacity-in-0 motion-translate-y-in-[50%]`,
-        [hidden]
-    );
-    const cardImageVarians = useMemo(
-        () => (!hidden && character?.icon ? `motion-opacity-in-0 motion-translate-x-in-[-5%]` : `motion-opacity-out-0`),
-        [hidden, character?.icon]
-    );
+
+    const cardVarians = clsx({
+        "motion-opacity-out-0 motion-translate-y-out-[50%]": hidden,
+        "motion-opacity-in-0 motion-translate-y-in-[50%]": !hidden,
+    });
+
+    const cardImageVarians = clsx({
+        "motion-opacity-in-0 motion-translate-x-in-[-5%]": !hidden && character?.icon,
+        "motion-opacity-out-0": hidden || !character?.icon,
+    });
+
     const paragraphRef = useRef<HTMLDivElement>(null);
 
     return (
@@ -164,7 +164,7 @@ function NarrationScreenText({ paragraphRef }: { paragraphRef: RefObject<HTMLDiv
     const startTypewriter = useTypewriterStore(useShallow((state) => state.start));
     const endTypewriter = useTypewriterStore(useShallow((state) => state.end));
     const restoreDelay = useTypewriterStore(useShallow((state) => state.restoreDelay));
-    const { data: { animatedText, text } = {} } = useQueryDialogue();
+    const { data: { text } = {} } = useQueryDialogue();
     const { mode } = useColorScheme();
 
     const handleCharacterAnimationComplete = useCallback((ref: { current: HTMLSpanElement | null }) => {
@@ -183,18 +183,6 @@ function NarrationScreenText({ paragraphRef }: { paragraphRef: RefObject<HTMLDiv
             style={{ margin: 0, padding: 0, maxWidth: "100%" }}
         >
             <span>
-                <Markdown
-                    remarkPlugins={[remarkGfm]}
-                    rehypePlugins={[rehypeRaw]}
-                    components={{
-                        p: (props) => <span {...props} />,
-                    }}
-                >
-                    {text}
-                </Markdown>
-            </span>
-            <span>
-                <span> </span>
                 <MarkdownTypewriterHooks
                     remarkPlugins={[remarkGfm]}
                     rehypePlugins={[rehypeRaw]}
@@ -213,7 +201,7 @@ function NarrationScreenText({ paragraphRef }: { paragraphRef: RefObject<HTMLDiv
                     }}
                     fallback={<AnimatedDots />}
                 >
-                    {animatedText}
+                    {text}
                 </MarkdownTypewriterHooks>
             </span>
         </p>

@@ -16,6 +16,9 @@ export default function CreditsScreen() {
         // Stop music when leaving the credits screen
         return () => {
             AudioManager.stopMusic(1000); // Optional fade out
+            if (progressInterval.current) {
+                clearInterval(progressInterval.current);
+            }
         };
     }, []);
 

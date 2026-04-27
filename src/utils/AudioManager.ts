@@ -2,12 +2,14 @@ import { sound } from "@pixi/sound";
 import { Music, Sfx } from "../values/sounds";
 import { storage } from "@drincs/pixi-vn";
 
-let _currentMusic: Music | null = null;
+let _currentMusic: Music | null = storage.get<Music>("current_music") ?? null;
+const _activeSfx = new Set<Sfx>();
 const STORAGE_KEY_MASTER = "vol_master";
 const STORAGE_KEY_MUSIC = "vol_music";
 const STORAGE_KEY_SFX = "vol_sfx";
+const STORAGE_KEY_CURRENT_MUSIC = "current_music";
 
-// Initialize volumes from storage or defaults
+// Initialize volumes and music from storage or defaults
 let _masterVol = storage.get<number>(STORAGE_KEY_MASTER) ?? 1.0;
 let _musicVol = storage.get<number>(STORAGE_KEY_MUSIC) ?? 0.6;
 let _sfxVol = storage.get<number>(STORAGE_KEY_SFX) ?? 1.0;
@@ -49,6 +51,7 @@ const AudioManager = {
         try {
             sound.play(alias, { loop: true, volume: finalVolume });
             _currentMusic = alias;
+            storage.set(STORAGE_KEY_CURRENT_MUSIC, alias);
         } catch (e) {
             console.error(`[AudioManager] Error playing music ${alias}:`, e);
         }
@@ -79,6 +82,7 @@ const AudioManager = {
             }
         } catch { /* noop */ }
         _currentMusic = null;
+        storage.remove(STORAGE_KEY_CURRENT_MUSIC);
     },
 
     // -------------------------------------------------------
@@ -94,7 +98,11 @@ const AudioManager = {
         }
 
         try {
-            sound.play(alias, { volume: finalVolume });
+            _activeSfx.add(alias);
+            sound.play(alias, {
+                volume: finalVolume,
+                complete: () => _activeSfx.delete(alias)
+            });
         } catch (e) {
             console.error(`[AudioManager] Error playing SFX ${alias}:`, e);
         }
@@ -104,6 +112,7 @@ const AudioManager = {
     stopSfx(alias: Sfx): void {
         try {
             sound.stop(alias);
+            _activeSfx.delete(alias);
         } catch { /* noop */ }
     },
 
@@ -111,17 +120,15 @@ const AudioManager = {
     stopAll(): void {
         sound.stopAll();
         _currentMusic = null;
+        _activeSfx.clear();
     },
 
     /** Stop all currently playing SFX (ones that are not the current music). */
     stopAllSfx(): void {
-        const musicAlias = _currentMusic;
-        // This is a brutal way because @pixi/sound doesn't provide a list of playing SFX-only instances
-        // easily without tracking them manually.
-        sound.stopAll();
-        if (musicAlias) {
-            this.playMusic(musicAlias);
+        for (const alias of _activeSfx) {
+            sound.stop(alias);
         }
+        _activeSfx.clear();
     },
 
     // -------------------------------------------------------
