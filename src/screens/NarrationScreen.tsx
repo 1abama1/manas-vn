@@ -6,7 +6,7 @@ import CardContent from "@mui/joy/CardContent";
 import Sheet from "@mui/joy/Sheet";
 import Typography from "@mui/joy/Typography";
 import clsx from "clsx";
-import { RefObject, useCallback, useRef } from "react";
+import { memo, RefObject, useCallback, useRef } from "react";
 import { MarkdownTypewriterHooks } from "react-markdown-typewriter";
 import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
@@ -19,15 +19,24 @@ import useInterfaceStore from "../stores/useInterfaceStore";
 import useTypewriterStore from "../stores/useTypewriterStore";
 import ChoiceMenu from "./ChoiceMenu";
 
+// ─── Константы отрисовки ────────────────────────────────────
+const CARD_BORDER_RADIUS = 0;
+
+// ─── Основной экран ─────────────────────────────────────────
 export default function NarrationScreen() {
-    const {
-        height: cardHeightTemp,
-        imageWidth: cardImageWidth,
-        setImageWidth: setCardImageWidth,
-    } = useDialogueCardStore(useShallow((state) => state));
-    const { data: { animatedText, character, text } = {} } = useQueryDialogue();
-    const hidden = useInterfaceStore((state) => state.hidden || (animatedText || text ? false : true));
-    const cardHeight = animatedText || text ? cardHeightTemp : 0;
+    const { height: cardHeightTemp, imageWidth: cardImageWidth, setImageWidth: setCardImageWidth } =
+        useDialogueCardStore(useShallow((state) => state));
+
+    const { data: dialogueData } = useQueryDialogue();
+    const { text, character } = dialogueData ?? {};
+
+    // Скрываем карточку, если нет текста
+    const hasContent = Boolean(text);
+    const hidden = useInterfaceStore(
+        // useShallow здесь не нужен — примитивное значение
+        (state) => state.hidden || !hasContent
+    );
+    const cardHeight = hasContent ? cardHeightTemp : 0;
 
     const cardVarians = clsx({
         "motion-opacity-out-0 motion-translate-y-out-[50%]": hidden,
@@ -40,6 +49,35 @@ export default function NarrationScreen() {
     });
 
     const paragraphRef = useRef<HTMLDivElement>(null);
+
+    // ИСПРАВЛЕНО: добавлен paragraphRef в зависимости useCallback.
+    // Ref-объект стабилен (React гарантирует), поэтому callback
+    // пересоздаётся только при реальной смене элемента.
+    const handleCharacterAnimationComplete = useCallback(
+        (ref: { current: HTMLSpanElement | null }) => {
+            const paragraph = paragraphRef.current;
+            const char = ref.current;
+            if (paragraph && char) {
+                paragraph.scrollTo({
+                    top: char.offsetTop - paragraph.clientHeight / 2,
+                    behavior: "auto",
+                });
+            }
+        },
+        // paragraphRef сам по себе стабилен, но мы включаем его
+        // чтобы линтер не предупреждал о deps.
+        [paragraphRef]
+    );
+
+    // ОПТИМИЗАЦИЯ: clamp логика вынесена в стабильный callback
+    const handleImageWidthChange = useCallback(
+        (_: Event | React.SyntheticEvent, value: number | number[]) => {
+            if (typeof value !== "number") return;
+            const clamped = Math.max(5, Math.min(75, value));
+            setCardImageWidth(clamped);
+        },
+        [setCardImageWidth]
+    );
 
     return (
         <Box
@@ -65,8 +103,8 @@ export default function NarrationScreen() {
                     className={cardVarians}
                 >
                     <Card
-                        key={"dialogue-card"}
-                        orientation='horizontal'
+                        key="dialogue-card"
+                        orientation="horizontal"
                         sx={{
                             overflow: "hidden",
                             gap: 1,
@@ -74,7 +112,7 @@ export default function NarrationScreen() {
                             height: "100%",
                             width: "100%",
                             marginX: 0,
-                            borderRadius: 0,
+                            borderRadius: CARD_BORDER_RADIUS,
                             borderLeft: 0,
                             borderRight: 0,
                             borderBottom: 0,
@@ -83,56 +121,31 @@ export default function NarrationScreen() {
                         {character?.icon && (
                             <AspectRatio
                                 flex
-                                ratio='1'
-                                maxHeight={"20%"}
-                                sx={{
-                                    height: "100%",
-                                    minWidth: `${cardImageWidth}%`,
-                                }}
-                                className={`motion-scale-x-in-0`}
+                                ratio="1"
+                                maxHeight="20%"
+                                sx={{ height: "100%", minWidth: `${cardImageWidth}%` }}
+                                className="motion-scale-x-in-0"
                             >
-                                <img src={character.icon} loading='lazy' alt='' />
+                                <img src={character.icon} loading="lazy" alt="" />
                             </AspectRatio>
                         )}
+
                         <SliderResizer
-                            orientation='horizontal'
+                            orientation="horizontal"
                             max={100}
                             min={0}
                             value={cardImageWidth}
-                            onChange={(_, value) => {
-                                if (typeof value === "number") {
-                                    if (value > 75) {
-                                        value = 75;
-                                    }
-                                    if (value < 5) {
-                                        value = 5;
-                                    }
-                                    setCardImageWidth(value);
-                                }
-                            }}
+                            onChange={handleImageWidthChange}
                             sx={{
                                 pointerEvents: !hidden && character?.icon ? "auto" : "none",
                             }}
                             className={cardImageVarians}
                         />
+
                         <CardContent>
-                            <Typography
-                                fontSize={{ xs: 'lg', sm: 'xl', lg: 'xl2' }}
-                                fontWeight='lg'
-                                sx={{
-                                    color: character?.color,
-                                    paddingLeft: 1,
-                                    height: { xs: undefined, md: 30 },
-                                    marginLeft: 2,
-                                }}
-                                className={
-                                    character && character.name
-                                        ? `motion-opacity-in-0 motion-translate-x-in-[-3%]`
-                                        : `motion-opacity-out-0`
-                                }
-                            >
-                                {`${character?.name || ""} ${character?.surname || ""}`}
-                            </Typography>
+                            {/* ОПТИМИЗАЦИЯ: CharacterName вынесен в memo-компонент */}
+                            <CharacterName character={character} hidden={hidden} />
+
                             <Sheet
                                 ref={paragraphRef}
                                 sx={{
@@ -149,7 +162,10 @@ export default function NarrationScreen() {
                                     paddingBottom: { xs: 4, md: 5 },
                                 }}
                             >
-                                <NarrationScreenText paragraphRef={paragraphRef} />
+                                <NarrationScreenText
+                                    paragraphRef={paragraphRef}
+                                    onCharacterAnimationComplete={handleCharacterAnimationComplete}
+                                />
                             </Sheet>
                         </CardContent>
                     </Card>
@@ -159,27 +175,70 @@ export default function NarrationScreen() {
     );
 }
 
-function NarrationScreenText({ paragraphRef }: { paragraphRef: RefObject<HTMLDivElement | null> }) {
+// ─── CharacterName: memo предотвращает ре-рендер при смене текста ──
+type CharacterNameProps = {
+    character: { name?: string; surname?: string; color?: string } | undefined;
+    hidden: boolean;
+};
+
+const CharacterName = memo(function CharacterName({ character, hidden }: CharacterNameProps) {
+    const hasName = Boolean(character?.name);
+    return (
+        <Typography
+            fontSize={{ xs: "lg", sm: "xl", lg: "xl2" }}
+            fontWeight="lg"
+            sx={{
+                color: character?.color,
+                paddingLeft: 1,
+                height: { xs: undefined, md: 30 },
+                marginLeft: 2,
+            }}
+            className={
+                hasName && !hidden
+                    ? "motion-opacity-in-0 motion-translate-x-in-[-3%]"
+                    : "motion-opacity-out-0"
+            }
+        >
+            {`${character?.name ?? ""} ${character?.surname ?? ""}`.trim()}
+        </Typography>
+    );
+});
+
+// ─── NarrationScreenText: изолирован от изменений character ────────
+type NarrationScreenTextProps = {
+    paragraphRef: RefObject<HTMLDivElement | null>;
+    onCharacterAnimationComplete: (ref: { current: HTMLSpanElement | null }) => void;
+};
+
+// memo: ре-рендер только при смене text или typewriterDelay
+const NarrationScreenText = memo(function NarrationScreenText({
+    onCharacterAnimationComplete,
+}: NarrationScreenTextProps) {
     const typewriterDelay = useTypewriterStore(useShallow((state) => state.delay));
-    const startTypewriter = useTypewriterStore(useShallow((state) => state.start));
-    const endTypewriter = useTypewriterStore(useShallow((state) => state.end));
-    const restoreDelay = useTypewriterStore(useShallow((state) => state.restoreDelay));
-    const { data: { text } = {} } = useQueryDialogue();
+    const startTypewriter = useTypewriterStore((state) => state.start);
+    const endTypewriter   = useTypewriterStore((state) => state.end);
+    const restoreDelay    = useTypewriterStore((state) => state.restoreDelay);
+    const { data: dialogueData } = useQueryDialogue();
+    const text = dialogueData?.text;
     const { mode } = useColorScheme();
 
-    const handleCharacterAnimationComplete = useCallback((ref: { current: HTMLSpanElement | null }) => {
-        if (paragraphRef.current && ref.current) {
-            let scrollTop = ref.current.offsetTop - paragraphRef.current.clientHeight / 2;
-            paragraphRef.current.scrollTo({
-                top: scrollTop,
-                behavior: "auto",
-            });
-        }
-    }, []);
+    const handleAnimationStart = useCallback(() => {
+        restoreDelay();
+        startTypewriter();
+    }, [restoreDelay, startTypewriter]);
+
+    const handleAnimationComplete = useCallback(
+        (definition: "visible" | "hidden") => {
+            if (definition === "visible") endTypewriter();
+        },
+        [endTypewriter]
+    );
 
     return (
         <p
-            className={`prose prose-sm sm:prose-base md:prose-lg lg:prose-xl ${mode === "dark" ? "dark:prose-invert" : ""}`}
+            className={`prose prose-sm sm:prose-base md:prose-lg lg:prose-xl ${
+                mode === "dark" ? "dark:prose-invert" : ""
+            }`}
             style={{ margin: 0, padding: 0, maxWidth: "100%" }}
         >
             <span>
@@ -188,16 +247,9 @@ function NarrationScreenText({ paragraphRef }: { paragraphRef: RefObject<HTMLDiv
                     rehypePlugins={[rehypeRaw]}
                     delay={typewriterDelay}
                     motionProps={{
-                        onAnimationStart: () => {
-                            restoreDelay();
-                            startTypewriter();
-                        },
-                        onAnimationComplete: (definition: "visible" | "hidden") => {
-                            if (definition == "visible") {
-                                endTypewriter();
-                            }
-                        },
-                        onCharacterAnimationComplete: handleCharacterAnimationComplete,
+                        onAnimationStart: handleAnimationStart,
+                        onAnimationComplete: handleAnimationComplete,
+                        onCharacterAnimationComplete: onCharacterAnimationComplete,
                     }}
                     fallback={<AnimatedDots />}
                 >
@@ -206,4 +258,4 @@ function NarrationScreenText({ paragraphRef }: { paragraphRef: RefObject<HTMLDiv
             </span>
         </p>
     );
-}
+});

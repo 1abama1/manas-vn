@@ -10,7 +10,7 @@ export default function CreditsScreen() {
     const { t } = useTranslation(["ui"]);
     const [holdProgress, setHoldProgress] = useState(0);
     const [isHolding, setIsHolding] = useState(false);
-    const progressInterval = useRef<NodeJS.Timeout | null>(null);
+    const progressInterval = useRef<ReturnType<typeof setInterval> | null>(null);
 
     useEffect(() => {
         // Stop music when leaving the credits screen
