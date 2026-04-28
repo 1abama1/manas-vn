@@ -1,5 +1,4 @@
 import { moveIn, moveOut, narration, newLabel, showImage } from "@drincs/pixi-vn";
-import { Assets } from "pixi.js";
 import { Backgrounds, Emotions } from "../../values/assets";
 import { kanykei, manas, storyteller } from "../../values/characters";
 import AudioManager from "../../utils/AudioManager";
@@ -94,11 +93,5 @@ export const act4_scene1 = newLabel(
         async (props) => {
             return await narration.jump(act4_scene2, props);
         }
-    ],
-    // act4 has no onLoadingLabel in the original, add bundle preload
-    {
-        onLoadingLabel: async () => {
-            await Assets.loadBundle(["audio_act4"]);
-        },
-    }
+    ]
 );

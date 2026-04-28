@@ -1,4 +1,5 @@
 import { moveIn, moveOut, narration, newLabel, showImage } from "@drincs/pixi-vn";
+import { Assets } from "pixi.js";
 import { Backgrounds, Emotions } from "../../values/assets";
 import { chiyirdi, spy, storyteller } from "../../values/characters";
 import AudioManager from "../../utils/AudioManager";
@@ -13,6 +14,9 @@ export const act1_scene2 = newLabel(
             // Note: In a real scenario, you'd want to hook into the engine's cleanup/interrupt event.
             // For now, we follow the pattern to ensure we don't accidentally update the background if the scene is skipped or changed.
             
+            // 🔄 Start preloading act2 assets in background while the player reads act1
+            Assets.backgroundLoadBundle(["act2", "audio_act2"]);
+
             await showImage("bg", Backgrounds.YURTA_OUTSIDE, { width: 1920, height: 1080 });
 
             // 🔊 Magic shimmer/chime at the flash of light (birth)

@@ -74,8 +74,9 @@ export const act2 = newLabel(
         }
     ],
     {
-        onLoadingLabel: async () => {
-            await Assets.loadBundle(["act2", "audio_act2"]);
+        onLoadingLabel: () => {
+            // Non-blocking: act2 assets were preloaded during act1_scene2
+            Assets.backgroundLoadBundle(["act2", "audio_act2"]);
         },
     }
 );

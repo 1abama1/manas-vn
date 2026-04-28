@@ -1,4 +1,5 @@
 import { moveIn, moveOut, narration, newLabel, showImage } from "@drincs/pixi-vn";
+import { Assets } from "pixi.js";
 import { Backgrounds, Emotions } from "../../values/assets";
 import { almambet, manas, storyteller } from "../../values/characters";
 import AudioManager from "../../utils/AudioManager";
@@ -9,6 +10,9 @@ export const act2_scene2 = newLabel(
     "act2_scene2",
     [
         async () => {
+            // 🔄 Start preloading act3 assets in background while the player reads act2
+            Assets.backgroundLoadBundle(["act3", "audio_act3"]);
+
             await showImage("bg", Backgrounds.OATH_HILL, { width: 1920, height: 1080 });
 
             narration.dialogue = {

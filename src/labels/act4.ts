@@ -11,7 +11,8 @@ export const act4 = newLabel(
     ],
     {
         onLoadingLabel: () => {
-            Assets.backgroundLoadBundle(["act4"]);
+            // Non-blocking: act4 assets were preloaded during act3_scene3
+            Assets.backgroundLoadBundle(["act4", "audio_act4"]);
         },
     }
 );
