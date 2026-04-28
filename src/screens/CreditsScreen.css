@@ -1,124 +1,311 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap');
+
+/* ── Переменные ─────────────────────────────────────── */
+:root {
+    --gold-bright: #f0c060;
+    --gold-mid: #c8923a;
+    --gold-dark: #7a4e18;
+    --cream: #f5ead8;
+    --bg-deep: #050301;
+    --ornament-opacity: 0.18;
+}
+
+/* ── Контейнер ──────────────────────────────────────── */
 .credits-container {
     width: 100vw;
     height: 100vh;
-    background-color: black;
-    color: white;
+    background-color: var(--bg-deep);
+    color: var(--cream);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    font-family: Arial, sans-serif;
+    font-family: 'Cinzel', serif;
     overflow: hidden;
     position: relative;
+    cursor: default;
+    user-select: none;
 }
 
+/* ── Фоновый градиент — атмосфера ───────────────────── */
+.credits-container::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(ellipse 60% 40% at 50% 0%, rgba(200, 146, 58, 0.12) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 60% at 50% 100%, rgba(200, 146, 58, 0.08) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* ── SVG орнамент сверху ────────────────────────────── */
+.credits-ornament-top,
+.credits-ornament-bottom {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(600px, 90vw);
+    opacity: var(--ornament-opacity);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.credits-ornament-top {
+    top: 0;
+}
+
+.credits-ornament-bottom {
+    bottom: 0;
+    transform: translateX(-50%) scaleY(-1);
+}
+
+/* ── Тонкие линии-рамки слева/справа ───────────────── */
+.credits-frame-line {
+    position: absolute;
+    top: 5%;
+    bottom: 5%;
+    width: 1px;
+    background: linear-gradient(to bottom,
+            transparent 0%,
+            rgba(200, 146, 58, 0.4) 20%,
+            rgba(200, 146, 58, 0.4) 80%,
+            transparent 100%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.credits-frame-line.left {
+    left: clamp(16px, 4vw, 60px);
+}
+
+.credits-frame-line.right {
+    right: clamp(16px, 4vw, 60px);
+}
+
+/* ── Список имён (скролл) ───────────────────────────── */
 .credits-list {
     display: flex;
     flex-direction: column;
-    gap: 4rem;
+    gap: 5rem;
     align-items: center;
     position: absolute;
     top: 100%;
     width: 100%;
-    animation: scrollNames 15s linear forwards;
+    padding: 0 8vw;
+    animation: scrollNames 22s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+    animation-delay: 0.5s;
+    z-index: 2;
 }
 
+/* ── Один блок (роль + имя) ─────────────────────────── */
+.credit-block {
+    text-align: center;
+    position: relative;
+}
+
+/* Декоративная линия над ролью */
+.credit-block::before {
+    content: '✦';
+    display: block;
+    color: var(--gold-mid);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    opacity: 0.7;
+    letter-spacing: 0.5em;
+}
+
+.credit-role {
+    font-family: 'EB Garamond', serif;
+    font-size: clamp(0.75rem, 1.5vw, 1rem);
+    color: var(--gold-mid);
+    margin-bottom: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.35em;
+    font-weight: 400;
+    font-style: italic;
+}
+
+.credit-name {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(1.2rem, 3vw, 2.2rem);
+    font-weight: 700;
+    margin: 0;
+    color: var(--cream);
+    text-shadow:
+        0 0 40px rgba(200, 146, 58, 0.5),
+        0 0 80px rgba(200, 146, 58, 0.2);
+    letter-spacing: 0.08em;
+}
+
+/* ── Блок «Спасибо» ─────────────────────────────────── */
 .thank-you-wrapper {
     position: absolute;
     top: 100%;
     width: 100%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    /* Начинается с задержкой или большим отступом, чтобы идти после имен */
-    animation: stayInCenter 20s linear forwards;
-    /* Увеличиваем время и добавляем задержку начала основного движения */
+    gap: 1.5rem;
+    animation: riseToCenter 24s linear forwards;
+    z-index: 2;
 }
 
-.credit-block {
-    text-align: center;
-}
-
-.credit-role {
-    font-size: 1.5rem;
-    color: #a0a0a0;
-    margin-bottom: 0.5rem;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-}
-
-.credit-name {
-    font-size: 2.5rem;
-    font-weight: bold;
+.thank-you-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(1.6rem, 4vw, 3rem);
+    font-weight: 900;
+    color: var(--gold-bright);
+    letter-spacing: 0.12em;
+    text-shadow:
+        0 0 30px rgba(240, 192, 96, 0.8),
+        0 0 80px rgba(240, 192, 96, 0.4),
+        0 2px 4px rgba(0, 0, 0, 0.8);
     margin: 0;
 }
 
-.credits-skip {
-    position: absolute;
-    bottom: 2rem;
-    right: 2rem;
-    color: rgba(255, 255, 255, 0.5);
-    font-size: 1rem;
-    cursor: pointer;
-    transition: color 0.3s ease;
-    z-index: 10;
+/* Подзаголовок под «Спасибо» */
+.thank-you-subtitle {
+    font-family: 'EB Garamond', serif;
+    font-size: clamp(0.9rem, 1.8vw, 1.3rem);
+    font-style: italic;
+    color: rgba(245, 234, 216, 0.5);
+    letter-spacing: 0.2em;
+    margin: 0;
 }
 
-.credits-skip:hover {
-    color: white;
+/* Горизонтальный разделитель */
+.thank-you-divider {
+    width: clamp(120px, 20vw, 200px);
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-mid), transparent);
+    margin: 0.5rem 0;
 }
 
+/* ── Прогресс-бар пропуска ──────────────────────────── */
 .skip-progress-container {
     position: absolute;
-    bottom: 4rem;
-    right: 2rem;
-    width: 200px;
-    height: 4px;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 2px;
-    overflow: hidden;
+    bottom: 2.5rem;
+    right: clamp(16px, 4vw, 40px);
+    width: clamp(120px, 15vw, 180px);
+    z-index: 10;
     opacity: 0;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.4s ease;
 }
 
 .skip-progress-container.active {
     opacity: 1;
 }
 
-.skip-progress-bar {
-    height: 100%;
-    background: white;
-    width: 0%;
+.skip-progress-label {
+    font-family: 'EB Garamond', serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    color: rgba(245, 234, 216, 0.5);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    text-align: right;
 }
 
+.skip-progress-track {
+    height: 2px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 1px;
+    overflow: hidden;
+}
+
+.skip-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold-dark), var(--gold-bright));
+    border-radius: 1px;
+    transition: width 0.05s linear;
+    box-shadow: 0 0 8px rgba(240, 192, 96, 0.6);
+}
+
+/* ── Подсказка «удержи» ─────────────────────────────── */
+.credits-skip {
+    position: absolute;
+    bottom: 2.5rem;
+    right: clamp(16px, 4vw, 40px);
+    font-family: 'EB Garamond', serif;
+    font-size: 0.85rem;
+    font-style: italic;
+    color: rgba(245, 234, 216, 0.3);
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    z-index: 10;
+}
+
+.credits-skip:hover {
+    color: rgba(245, 234, 216, 0.7);
+}
+
+.skip-progress-container.active~.credits-skip {
+    opacity: 0;
+}
+
+/* ── Частицы-звёзды (CSS-only) ──────────────────────── */
+.credits-stars {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.credits-star {
+    position: absolute;
+    border-radius: 50%;
+    background: var(--gold-bright);
+    animation: starTwinkle var(--dur, 3s) ease-in-out infinite var(--delay, 0s);
+    opacity: 0;
+}
+
+@keyframes starTwinkle {
+
+    0%,
+    100% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+
+    50% {
+        opacity: 0.6;
+        transform: scale(1);
+    }
+}
+
+/* ── Анимации скролла ───────────────────────────────── */
 @keyframes scrollNames {
     0% {
         transform: translateY(0);
     }
 
     100% {
-        transform: translateY(-250vh);
+        transform: translateY(-260vh);
     }
 }
 
-@keyframes stayInCenter {
-
-    /* Первые 5 секунд висит внизу (пока идут первые имена) */
+@keyframes riseToCenter {
     0% {
         transform: translateY(0);
     }
 
-    25% {
+    30% {
         transform: translateY(0);
     }
 
-    /* За следующие 10 секунд доходит до центра (75% от 20с) */
-    75% {
+    /* ждём пока имена прокрутятся */
+    65% {
         transform: translateY(-50vh);
     }
 
-    /* Висит в центре последние 5 секунд (25% времени) */
+    /* поднимаемся в центр */
     100% {
         transform: translateY(-50vh);
     }
+
+    /* висим */
 }

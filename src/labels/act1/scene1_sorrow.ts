@@ -61,8 +61,8 @@ export const act1 = newLabel(
         }
     ],
     {
-        onLoadingLabel: () => {
-            Assets.backgroundLoadBundle(["act1", "audio_act1"]);
+        onLoadingLabel: async () => {
+            await Assets.loadBundle(["act1", "audio_act1"]);
         },
     }
 );

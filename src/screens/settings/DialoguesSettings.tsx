@@ -24,7 +24,7 @@ export default function DialoguesSettings() {
                 }}
             >
                 <Slider
-                    defaultValue={typewriterDelay}
+                    value={typewriterDelay}
                     getAriaValueText={(value) => `${value}ms`}
                     step={10}
                     size="sm"
@@ -66,7 +66,7 @@ export default function DialoguesSettings() {
                 }}
             >
                 <Slider
-                    defaultValue={autoTime}
+                    value={autoTime}
                     getAriaValueText={(value) => `${value}s`}
                     step={1}
                     size="sm"

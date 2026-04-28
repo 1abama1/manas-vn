@@ -97,8 +97,8 @@ export const act4_scene1 = newLabel(
     ],
     // act4 has no onLoadingLabel in the original, add bundle preload
     {
-        onLoadingLabel: () => {
-            Assets.backgroundLoadBundle(["audio_act4"]);
+        onLoadingLabel: async () => {
+            await Assets.loadBundle(["audio_act4"]);
         },
     }
 );
