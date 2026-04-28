@@ -13,7 +13,7 @@ const manifest: AssetsManifest = {
             assets: [
                 {
                     alias: "background_main_menu",
-                    src: "/manas/mainmenu.png",
+                    src: "/manas/mainmenu.jpg",
                 },
             ],
         },
@@ -23,7 +23,7 @@ const manifest: AssetsManifest = {
             assets: [
                 {
                     alias: "bg01-hallway",
-                    src: "/manas/mainmenu.png",
+                    src: "/manas/mainmenu.jpg",
                 },
             ],
         },
@@ -39,7 +39,7 @@ const manifest: AssetsManifest = {
                 },
                 {
                     alias: "bg_black",
-                    src: "/manas/black.png",
+                    src: "/manas/black.jpg",
                 },
                 {
                     alias: "bg_balbal",
@@ -51,7 +51,7 @@ const manifest: AssetsManifest = {
                 },
                 {
                     alias: "bg_yurta_outside",
-                    src: "/manas/act1/scene-2/1.png",
+                    src: "/manas/act1/scene-2/1.jpg",
                 },
                 {
                     alias: "bg_eagle_space",
@@ -59,37 +59,37 @@ const manifest: AssetsManifest = {
                 },
                 {
                     alias: "bg_white",
-                    src: "/manas/black.png", // Fallback to black for now since white is missing
+                    src: "/manas/black.jpg", // Fallback to black for now since white is missing
                 },
 
                 // === Characters ===
                 {
                     alias: "storyteller_base",
-                    src: "/manas/act1/scene-1/2.png",
+                    src: "/manas/act1/scene-1/2.webp",
                 },
                 {
                     alias: "manas_baby",
-                    src: "/manas/act1/scene-2/4.png",
+                    src: "/manas/act1/scene-2/4.webp",
                 },
                 {
                     alias: "jakyp_sad",
-                    src: "/manas/act1/scene-1/3.png",
+                    src: "/manas/act1/scene-1/2.webp",
                 },
                 {
                     alias: "spy_attack",
-                    src: "/manas/act1/scene-2/3.png",
+                    src: "/manas/act1/scene-2/3.webp",
                 },
                 {
                     alias: "jakyp_hope",
-                    src: "/manas/act1/scene-1/3.png", // Reusing the same sprite
+                    src: "/manas/act1/scene-1/2.webp", // Reusing the same sprite
                 },
                 {
                     alias: "chiyirdi_shock",
-                    src: "/manas/act1/scene-2/2.png",
+                    src: "/manas/act1/scene-2/2.webp",
                 },
                 {
                     alias: "manas_neon_eyes",
-                    src: "/manas/act1/scene-2/4.png",
+                    src: "/manas/act1/scene-2/4.webp",
                 },
             ],
         },
@@ -117,19 +117,19 @@ const manifest: AssetsManifest = {
                 // Characters
                 {
                     alias: "manas_adult",
-                    src: "/manas/sprites/adult-manas.png",
+                    src: "/manas/sprites/adult-manas.webp",
                 },
                 {
                     alias: "bakai_base",
-                    src: "/manas/sprites/bakai.png",
+                    src: "/manas/sprites/bakai.webp",
                 },
                 {
                     alias: "almambet_base",
-                    src: "/manas/sprites/almanbet.png",
+                    src: "/manas/sprites/almanbet.webp",
                 },
                 {
                     alias: "kanykei_base",
-                    src: "/manas/sprites/kanykei.png",
+                    src: "/manas/sprites/kanykei.webp",
                 }
             ],
         },
@@ -161,11 +161,11 @@ const manifest: AssetsManifest = {
                 // Characters
                 {
                     alias: "chubak_base",
-                    src: "/manas/sprites/chubak.png",
+                    src: "/manas/sprites/chubak.webp",
                 },
                 {
                     alias: "konurbay_base",
-                    src: "/manas/sprites/konurbai.png",
+                    src: "/manas/sprites/konurbai.webp",
                 }
             ],
         },
@@ -185,11 +185,11 @@ const manifest: AssetsManifest = {
                 // Characters
                 {
                     alias: "manas_wounded",
-                    src: "/manas/sprites/almost-dead-manas.png",
+                    src: "/manas/sprites/almost-dead-manas.webp",
                 },
                 {
                     alias: "kanykei_mourning",
-                    src: "/manas/sprites/crying-kanykei.png",
+                    src: "/manas/sprites/crying-kanykei.webp",
                 }
             ],
         },
