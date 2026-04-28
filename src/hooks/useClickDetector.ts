@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import useTypewriterStore from "../stores/useTypewriterStore";
 import useNarrationFunctions from "./useNarrationFunctions";
 import { useQueryCanGoNext } from "./useQueryInterface";
@@ -12,6 +12,18 @@ export default function useClickDetector() {
     const setSkipEnabled = useSkipStore((state) => state.setEnabled);
     const { goNext } = useNarrationFunctions();
     const { data: canContinue = false } = useQueryCanGoNext();
+
+    const canContinueRef = useRef(canContinue);
+    const goNextRef = useRef(goNext);
+    const skipEnabledRef = useRef(skipEnabled);
+    const setSkipEnabledRef = useRef(setSkipEnabled);
+
+    useEffect(() => {
+        canContinueRef.current = canContinue;
+        goNextRef.current = goNext;
+        skipEnabledRef.current = skipEnabled;
+        setSkipEnabledRef.current = setSkipEnabled;
+    }, [canContinue, goNext, skipEnabled, setSkipEnabled]);
 
     useEffect(() => {
         const handleClick = (e: MouseEvent) => {
@@ -58,11 +70,11 @@ export default function useClickDetector() {
             }
             // ─────────────────────────────────────────────────────
 
-            if (canContinue) {
-                if (skipEnabled) {
-                    setSkipEnabled(false);
+            if (canContinueRef.current) {
+                if (skipEnabledRef.current) {
+                    setSkipEnabledRef.current(false);
                 }
-                goNext();
+                goNextRef.current();
             }
         };
 
@@ -77,7 +89,7 @@ export default function useClickDetector() {
             window.removeEventListener("click", handleClick, { capture: true });
             window.removeEventListener("contextmenu", handleContextMenu);
         };
-    }, [canContinue, goNext, skipEnabled, setSkipEnabled]);
+    }, []); // Listener is attached only once
 
     return null;
 }

@@ -34,12 +34,27 @@ export function useEditColorProvider(): ColorContextType {
     return context;
 }
 
-/**
- * Генерирует 10 оттенков цвета для темы MUI Joy.
- * Вынесено за пределы компонента — чистая функция, нет замыканий.
- */
+type ColorShades = {
+    "50":  string;
+    "100": string;
+    "200": string;
+    "300": string;
+    "400": string;
+    "500": string;
+    "600": string;
+    "700": string;
+    "800": string;
+    "900": string;
+};
+
+const shadesCache = new Map<string, ColorShades>();
+
 function get10ColorShades(color: string) {
-    return {
+    if (shadesCache.has(color)) {
+        return shadesCache.get(color)!;
+    }
+
+    const shades = {
         "50":  ShadeGenerator.hue(color).shade("10").hex(),
         "100": ShadeGenerator.hue(color).shade("20").hex(),
         "200": ShadeGenerator.hue(color).shade("40").hex(),
@@ -51,6 +66,9 @@ function get10ColorShades(color: string) {
         "800": ShadeGenerator.hue(color).shade("400").hex(),
         "900": ShadeGenerator.hue(color).shade("500").hex(),
     } as const;
+
+    shadesCache.set(color, shades);
+    return shades;
 }
 
 const SOLID_COLOR_VAR = {

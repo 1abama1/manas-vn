@@ -28,182 +28,32 @@ const manifest: AssetsManifest = {
             ],
         },
 
-        // characters
+        // Act 1 Bundle (Visual + Audio)
         {
             name: "act1",
             assets: [
                 // === Backgrounds ===
-                {
-                    alias: "bg_yurta",
-                    src: "/manas/act1/scene-1/1.jpeg",
-                },
-                {
-                    alias: "bg_black",
-                    src: "/manas/black.jpg",
-                },
-                {
-                    alias: "bg_balbal",
-                    src: "/manas/act1/scene-1/4a.jpeg",
-                },
-                {
-                    alias: "bg_horses",
-                    src: "/manas/act1/scene-1/4b.jpeg",
-                },
-                {
-                    alias: "bg_yurta_outside",
-                    src: "/manas/act1/scene-2/1.jpg",
-                },
-                {
-                    alias: "bg_eagle_space",
-                    src: "/manas/act1/scene-1/3a.jpeg",
-                },
-                {
-                    alias: "bg_white",
-                    src: "/manas/black.jpg", // Fallback to black for now since white is missing
-                },
+                { alias: "bg_yurta", src: "/manas/act1/scene-1/1.jpeg" },
+                { alias: "bg_black", src: "/manas/black.jpg" },
+                { alias: "bg_balbal", src: "/manas/act1/scene-1/4a.jpeg" },
+                { alias: "bg_horses", src: "/manas/act1/scene-1/4b.jpeg" },
+                { alias: "bg_yurta_outside", src: "/manas/act1/scene-2/1.jpg" },
+                { alias: "bg_eagle_space", src: "/manas/act1/scene-1/3a.jpeg" },
+                { alias: "bg_white", src: "/manas/black.jpg" }, // Reverted to black.jpg per user request
 
                 // === Characters ===
-                {
-                    alias: "storyteller_base",
-                    src: "/manas/act1/scene-1/2.webp",
-                },
-                {
-                    alias: "manas_baby",
-                    src: "/manas/act1/scene-2/4.webp",
-                },
-                {
-                    alias: "jakyp_sad",
-                    src: "/manas/act1/scene-1/2.webp",
-                },
-                {
-                    alias: "spy_attack",
-                    src: "/manas/act1/scene-2/3.webp",
-                },
-                {
-                    alias: "jakyp_hope",
-                    src: "/manas/act1/scene-1/2.webp", // Reusing the same sprite
-                },
-                {
-                    alias: "chiyirdi_shock",
-                    src: "/manas/act1/scene-2/2.webp",
-                },
-                {
-                    alias: "manas_neon_eyes",
-                    src: "/manas/act1/scene-2/4.webp",
-                },
-            ],
-        },
-        {
-            name: "act2",
-            assets: [
-                // Backgrounds
-                {
-                    alias: "bg_steppe_army",
-                    src: "/manas/act-2/scene-1/1-bg.jpeg",
-                },
-                {
-                    alias: "bg_yurta_night",
-                    src: "/manas/act-2/scene-1/2a.jpeg",
-                },
-                {
-                    alias: "bg_kanykei_room",
-                    src: "/manas/act-2/scene-1/2b.jpeg",
-                },
-                {
-                    alias: "bg_oath_hill",
-                    src: "/manas/act-2/scene-2/1-bg.jpeg",
-                },
+                { alias: "storyteller_base", src: "/manas/act1/scene-1/2.webp" },
+                { alias: "manas_baby", src: "/manas/act1/scene-2/4.webp" },
+                { alias: "jakyp_sad", src: "/manas/act1/scene-1/2.webp" },
+                { alias: "spy_attack", src: "/manas/act1/scene-2/3.webp" },
+                { alias: "jakyp_hope", src: "/manas/act1/scene-1/2.webp" },
+                { alias: "chiyirdi_shock", src: "/manas/act1/scene-2/2.webp" },
+                { alias: "manas_neon_eyes", src: "/manas/act1/scene-2/4.webp" },
 
-                // Characters
-                {
-                    alias: "manas_adult",
-                    src: "/manas/sprites/adult-manas.webp",
-                },
-                {
-                    alias: "bakai_base",
-                    src: "/manas/sprites/bakai.webp",
-                },
-                {
-                    alias: "almambet_base",
-                    src: "/manas/sprites/almanbet.webp",
-                },
-                {
-                    alias: "kanykei_base",
-                    src: "/manas/sprites/kanykei.webp",
-                }
-            ],
-        },
-        {
-            name: "act3",
-            assets: [
-                // Backgrounds
-                {
-                    alias: "bg_beijing_walls",
-                    src: "/manas/act-3/scene-1/1-bg.jpeg",
-                },
-                {
-                    alias: "bg_almambet_camp",
-                    src: "/manas/act-3/scene-1/2a-bg.jpeg",
-                },
-                {
-                    alias: "bg_chubak_camp",
-                    src: "/manas/act-3/scene-1/2b-bg.jpeg",
-                },
-                {
-                    alias: "bg_battle_chaos",
-                    src: "/manas/act-3/scene-2/1-bg.jpeg",
-                },
-                {
-                    alias: "bg_final_prayer",
-                    src: "/manas/act-3/scene-2/2-bg.jpeg",
-                },
-
-                // Characters
-                {
-                    alias: "chubak_base",
-                    src: "/manas/sprites/chubak.webp",
-                },
-                {
-                    alias: "konurbay_base",
-                    src: "/manas/sprites/konurbai.webp",
-                }
-            ],
-        },
-        {
-            name: "act4",
-            assets: [
-                // Backgrounds
-                {
-                    alias: "bg_last_will",
-                    src: "/manas/act-4/scene-1/1-bg.jpeg",
-                },
-                {
-                    alias: "bg_immortality",
-                    src: "/manas/act-4/scene-2/1-bg.jpeg",
-                },
-
-                // Characters
-                {
-                    alias: "manas_wounded",
-                    src: "/manas/sprites/almost-dead-manas.webp",
-                },
-                {
-                    alias: "kanykei_mourning",
-                    src: "/manas/sprites/crying-kanykei.webp",
-                }
-            ],
-        },
-        // ====================================================
-        // AUDIO BUNDLES  (place files under public/manas/audio/)
-        // ====================================================
-        {
-            name: "audio_act1",
-            assets: [
-                // --- Music ---
+                // === Audio ===
                 { alias: "music_act1_komuz_sad", src: "/manas/audio/act1/act1_music_sad.mp3" },
                 { alias: "music_act1_dream", src: "/manas/audio/act1/act1_music_dream.mp3" },
                 { alias: "music_act1_birth_flash", src: "/manas/audio/act1/act1_music_birth.mp3" },
-                // --- SFX ---
                 { alias: "sfx_hearth_fire", src: "/manas/audio/act1/act1_sfx_hearth.mp3" },
                 { alias: "sfx_eagle_screech", src: "/manas/audio/act1/act1_sfx_eagle.mp3" },
                 { alias: "sfx_birth_chime", src: "/manas/audio/act1/act1_music_birth.mp3" },
@@ -213,27 +63,50 @@ const manifest: AssetsManifest = {
                 { alias: "sfx_spear_catch", src: "/manas/audio/act1/act1_sfx_spear.mp3" },
             ],
         },
+        // Act 2 Bundle (Visual + Audio)
         {
-            name: "audio_act2",
+            name: "act2",
             assets: [
-                // --- Music ---
+                // Backgrounds
+                { alias: "bg_steppe_army", src: "/manas/act-2/scene-1/1-bg.jpeg" },
+                { alias: "bg_yurta_night", src: "/manas/act-2/scene-1/2a.jpeg" },
+                { alias: "bg_kanykei_room", src: "/manas/act-2/scene-1/2b.jpeg" },
+                { alias: "bg_oath_hill", src: "/manas/act-2/scene-2/1-bg.jpeg" },
+
+                // Characters
+                { alias: "manas_adult", src: "/manas/sprites/adult-manas.webp" },
+                { alias: "bakai_base", src: "/manas/sprites/bakai.webp" },
+                { alias: "almambet_base", src: "/manas/sprites/almanbet.webp" },
+                { alias: "kanykei_base", src: "/manas/sprites/kanykei.webp" },
+
+                // Audio
                 { alias: "music_act2_komuz_triumph", src: "/manas/audio/act2/act2_music_triumph.mp3" },
                 { alias: "music_act2_march", src: "/manas/audio/act2/act2_music_march.mp3" },
-                // --- SFX ---
                 { alias: "sfx_crowd_chant", src: "/manas/audio/act2/act2_sfx_crowd.mp3" },
                 { alias: "sfx_sword_clash", src: "/manas/audio/act2/act2_sfx_sword.mp3" },
                 { alias: "sfx_war_horn", src: "/manas/audio/act2/act2_sfx_horn.mp3" },
                 { alias: "sfx_cavalry_charge", src: "/manas/audio/act2/act2_music_march.mp3" },
             ],
         },
+        // Act 3 Bundle (Visual + Audio)
         {
-            name: "audio_act3",
+            name: "act3",
             assets: [
-                // --- Music ---
+                // Backgrounds
+                { alias: "bg_beijing_walls", src: "/manas/act-3/scene-1/1-bg.jpeg" },
+                { alias: "bg_almambet_camp", src: "/manas/act-3/scene-1/2a-bg.jpeg" },
+                { alias: "bg_chubak_camp", src: "/manas/act-3/scene-1/2b-bg.jpeg" },
+                { alias: "bg_battle_chaos", src: "/manas/act-3/scene-2/1-bg.jpeg" },
+                { alias: "bg_final_prayer", src: "/manas/act-3/scene-2/2-bg.jpeg" },
+
+                // Characters
+                { alias: "chubak_base", src: "/manas/sprites/chubak.webp" },
+                { alias: "konurbay_base", src: "/manas/sprites/konurbai.webp" },
+
+                // Audio
                 { alias: "music_act3_tension", src: "/manas/audio/act3/act3_music_tension.mp3" },
                 { alias: "music_act3_battle", src: "/manas/audio/act3/act3_music_battle.mp3" },
                 { alias: "music_act3_aftermath", src: "/manas/audio/act3/act3_music_aftermath.mp3" },
-                // --- SFX ---
                 { alias: "sfx_camp_ambience", src: "/manas/audio/act3/act3_music_tension.mp3" },
                 { alias: "sfx_battle_chaos", src: "/manas/audio/act3/act3_sfx_chaos.mp3" },
                 { alias: "sfx_arrow_volley", src: "/manas/audio/act3/act3_sfx_arrows.mp3" },
@@ -243,13 +116,21 @@ const manifest: AssetsManifest = {
                 { alias: "sfx_body_fall", src: "/manas/audio/act3/act3_sfx_fall.mp3" },
             ],
         },
+        // Act 4 Bundle (Visual + Audio)
         {
-            name: "audio_act4",
+            name: "act4",
             assets: [
-                // --- Music ---
+                // Backgrounds
+                { alias: "bg_last_will", src: "/manas/act-4/scene-1/1-bg.jpeg" },
+                { alias: "bg_immortality", src: "/manas/act-4/scene-2/1-bg.jpeg" },
+
+                // Characters
+                { alias: "manas_wounded", src: "/manas/sprites/almost-dead-manas.webp" },
+                { alias: "kanykei_mourning", src: "/manas/sprites/crying-kanykei.webp" },
+
+                // Audio
                 { alias: "music_act4_komuz_grief", src: "/manas/audio/act4/act4_music_grief.mp3" },
                 { alias: "music_act4_epilogue", src: "/manas/audio/act4/act4_music_epilogue.mp3" },
-                // --- SFX ---
                 { alias: "sfx_heavy_breath", src: "/manas/audio/act4/act4_sfx_breath.mp3" },
                 { alias: "sfx_wind_howl", src: "/manas/audio/act4/act4_sfx_wind.mp3" },
                 { alias: "sfx_final_drum", src: "/manas/audio/act4/act4_sfx_drum.mp3" },

@@ -6,7 +6,7 @@ import CardContent from "@mui/joy/CardContent";
 import Sheet from "@mui/joy/Sheet";
 import Typography from "@mui/joy/Typography";
 import clsx from "clsx";
-import { memo, RefObject, useCallback, useEffect, useRef } from "react";
+import { memo, useCallback, useEffect, useRef } from "react";
 import { MarkdownTypewriterHooks } from "react-markdown-typewriter";
 import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
@@ -163,7 +163,7 @@ export default function NarrationScreen() {
                                 }}
                             >
                                 <NarrationScreenText
-                                    paragraphRef={paragraphRef}
+                                    text={text}
                                     onCharacterAnimationComplete={handleCharacterAnimationComplete}
                                 />
                             </Sheet>
@@ -204,22 +204,20 @@ const CharacterName = memo(function CharacterName({ character, hidden }: Charact
     );
 });
 
-// ─── NarrationScreenText: изолирован от изменений character ────────
+// memo: ре-рендер только при смене text или typewriterDelay
 type NarrationScreenTextProps = {
-    paragraphRef: RefObject<HTMLDivElement | null>;
+    text: string | undefined;
     onCharacterAnimationComplete: (ref: { current: HTMLSpanElement | null }) => void;
 };
 
-// memo: ре-рендер только при смене text или typewriterDelay
 const NarrationScreenText = memo(function NarrationScreenText({
+    text,
     onCharacterAnimationComplete,
 }: NarrationScreenTextProps) {
     const typewriterDelay = useTypewriterStore(useShallow((state) => state.delay));
     const startTypewriter = useTypewriterStore((state) => state.start);
     const endTypewriter   = useTypewriterStore((state) => state.end);
     const restoreDelay    = useTypewriterStore((state) => state.restoreDelay);
-    const { data: dialogueData } = useQueryDialogue();
-    const text = dialogueData?.text;
     const { mode } = useColorScheme();
 
     useEffect(() => {

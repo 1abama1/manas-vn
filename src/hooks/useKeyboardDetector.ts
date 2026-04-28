@@ -44,6 +44,24 @@ export default function useKeyboardDetector() {
         locationRef.current = location;
     }, [canContinue, canGoBack, lastSave, skipEnabled, location]);
 
+    const queryClientRef = useRef(queryClient);
+    const tRef = useRef(t);
+    const setOpenLoadAlertRef = useRef(setOpenLoadAlert);
+    const setSkipEnabledRef = useRef(setSkipEnabled);
+    const goNextRef = useRef(goNext);
+    const goBackRef = useRef(goBack);
+    const enqueueSnackbarRef = useRef(enqueueSnackbar);
+
+    useEffect(() => {
+        queryClientRef.current = queryClient;
+        tRef.current = t;
+        setOpenLoadAlertRef.current = setOpenLoadAlert;
+        setSkipEnabledRef.current = setSkipEnabled;
+        goNextRef.current = goNext;
+        goBackRef.current = goBack;
+        enqueueSnackbarRef.current = enqueueSnackbar;
+    }, [queryClient, t, setOpenLoadAlert, setSkipEnabled, goNext, goBack, enqueueSnackbar]);
+
     const onkeydown = useCallback(
         (event: KeyboardEvent) => {
             switch (event.code) {
@@ -55,12 +73,12 @@ export default function useKeyboardDetector() {
                         }
                         saveGameToIndexDB()
                             .then((save) => {
-                                queryClient.setQueryData([SAVES_USE_QUEY_KEY, save.id], save);
-                                queryClient.setQueryData([LAST_SAVE_USE_QUEY_KEY], save);
-                                enqueueSnackbar(t("success_save"), { variant: "success" });
+                                queryClientRef.current.setQueryData([SAVES_USE_QUEY_KEY, save.id], save);
+                                queryClientRef.current.setQueryData([LAST_SAVE_USE_QUEY_KEY], save);
+                                enqueueSnackbarRef.current(tRef.current("success_save"), { variant: "success" });
                             })
                             .catch(() => {
-                                enqueueSnackbar(t("fail_save"), { variant: "error" });
+                                enqueueSnackbarRef.current(tRef.current("fail_save"), { variant: "error" });
                             });
                     }
                     break;
@@ -70,7 +88,7 @@ export default function useKeyboardDetector() {
                             console.log("No save to load");
                             return;
                         }
-                        setOpenLoadAlert(lastSaveRef.current);
+                        setOpenLoadAlertRef.current(lastSaveRef.current);
                     }
                     break;
                 case "Space":
@@ -97,9 +115,9 @@ export default function useKeyboardDetector() {
 
                         if (canContinueRef.current) {
                             if (skipEnabledRef.current) {
-                                setSkipEnabled(false);
+                                setSkipEnabledRef.current(false);
                             }
-                            goNext();
+                            goNextRef.current();
                         }
                     }
                     break;
@@ -114,15 +132,15 @@ export default function useKeyboardDetector() {
                         }
                         if (canGoBackRef.current) {
                             if (skipEnabledRef.current) {
-                                setSkipEnabled(false);
+                                setSkipEnabledRef.current(false);
                             }
-                            goBack();
+                            goBackRef.current();
                         }
                     }
                     break;
             }
         },
-        [queryClient, t, setOpenLoadAlert, setSkipEnabled, goNext, goBack, enqueueSnackbar]
+        [] // Stable callback
     );
 
     useEventListener({ type: "keydown", listener: onkeydown });

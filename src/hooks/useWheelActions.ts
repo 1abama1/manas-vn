@@ -50,11 +50,16 @@ export function useWheelActions({
     const queryClient = useQueryClient();
     const gameProps = useGameProps();
 
-    const runAsync = async (fn: (props: StepLabelProps) => Promise<unknown>) => {
+    const gamePropsRef = useRef(gameProps);
+    useEffect(() => {
+        gamePropsRef.current = gameProps;
+    }, [gameProps]);
+
+    const runAsync = useCallback(async (fn: (props: StepLabelProps) => Promise<unknown>) => {
         try {
             pendingAsync.current += 1;
             setLoading(pendingAsync.current > 0);
-            await fn(gameProps);
+            await fn(gamePropsRef.current);
         } finally {
             pendingAsync.current -= 1;
             setLoading(pendingAsync.current > 0);
@@ -62,43 +67,51 @@ export function useWheelActions({
                 queryClient.invalidateQueries({ queryKey: [INTERFACE_DATA_USE_QUEY_KEY] });
             }
         }
-    };
+    }, [setLoading, queryClient]);
 
-    const handleWheel = useCallback(
-        throttle(async (event: WheelEvent) => {
+    const handleWheelRef = useRef(
+        throttle(async (event: WheelEvent, runAsyncFn: typeof runAsync, minDeltaVal: number) => {
             if (!(isInsideRoot(event.target, HTML_UI_LAYER_NAME) || isInsideRoot(event.target, HTML_CANVAS_LAYER_NAME)))
                 return;
             if (hasScrollableParent(event.target)) return;
 
-            // blocca lo scroll nativo
+            // block native scroll
             event.preventDefault();
 
             const { deltaY } = event;
 
-            // ignora micro-movimenti del trackpad
-            if (Math.abs(deltaY) < minDelta) return;
+            // ignore micro-movements
+            if (Math.abs(deltaY) < minDeltaVal) return;
 
             if (deltaY < 0) {
                 // ⬆️ Scroll up
-                await runAsync(narration.continue.bind(narration));
+                await runAsyncFn(narration.continue.bind(narration));
             }
 
             if (deltaY > 0) {
                 // ⬇️ Scroll down
-                await runAsync(stepHistory.back.bind(stepHistory));
+                await runAsyncFn(stepHistory.back.bind(stepHistory));
             }
-        }, throttleMs),
-        [throttleMs, minDelta]
+        }, throttleMs)
     );
 
+    // Update throttle if throttleMs changes (rarely happens, but for completeness)
     useEffect(() => {
-        window.addEventListener("wheel", handleWheel, { passive: false });
+        handleWheelRef.current = throttle(handleWheelRef.current, throttleMs);
+    }, [throttleMs]);
+
+    const onWheel = useCallback((event: WheelEvent) => {
+        handleWheelRef.current(event, runAsync, minDelta);
+    }, [runAsync, minDelta]);
+
+    useEffect(() => {
+        window.addEventListener("wheel", onWheel, { passive: false });
 
         return () => {
-            window.removeEventListener("wheel", handleWheel);
-            handleWheel.cancel();
+            window.removeEventListener("wheel", onWheel);
+            handleWheelRef.current.cancel();
         };
-    }, [handleWheel]);
+    }, [onWheel]);
 
     return null;
 }

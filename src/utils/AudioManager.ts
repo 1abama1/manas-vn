@@ -25,8 +25,8 @@ let _masterVol = (storage.get<number>(STORAGE_KEY_MASTER)) ?? DEFAULT_MASTER;
 let _musicVol  = (storage.get<number>(STORAGE_KEY_MUSIC))  ?? DEFAULT_MUSIC;
 let _sfxVol    = (storage.get<number>(STORAGE_KEY_SFX))    ?? DEFAULT_SFX;
 
-// Применяем глобальный volume при первом воспроизведении (после жеста)
-// sound.volumeAll = _masterVol; // <-- Убрано отсюда
+// Применяем глобальный volume при инициализации
+sound.volumeAll = _masterVol;
 
 // ─── Восстановление трека после загрузки сохранения ─────────
 // Вызывается один раз при старте, не при каждом play
@@ -62,7 +62,6 @@ const AudioManager = {
      * Если тот же трек уже играет — просто обновляет громкость (без restart).
      */
     playMusic(alias: Music, volume = _musicVol): void {
-        sound.volumeAll = _masterVol; // Применяем мастер-громкость при первом жесте
         const finalVolume = Math.max(0, Math.min(1, volume)) * _masterVol;
 
         // Тот же трек — только обновляем громкость
@@ -163,7 +162,6 @@ const AudioManager = {
      * Хранит инстанс в Map для точечной остановки.
      */
     playSfx(alias: Sfx, volume = _sfxVol): void {
-        sound.volumeAll = _masterVol; // Применяем мастер-громкость при первом жесте
         if (!sound.exists(alias)) {
             console.warn(`[AudioManager] SFX not loaded: ${alias}`);
             return;

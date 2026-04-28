@@ -4,40 +4,6 @@ import { useTranslation } from "react-i18next";
 
 export const INTERFACE_DATA_USE_QUEY_KEY = "interface_data_use_quey_key";
 
-// ─────────────────────────────────────────────────────────────
-// HELPER: стабильная сериализация Character для сравнения
-// TanStack Query использует структурное сравнение данных,
-// но вложенные объекты без стабильного identity вызывают
-// лишние ре-рендеры. Мы возвращаем plain object с примитивами.
-// ─────────────────────────────────────────────────────────────
-function resolveCharacter(
-    character: CharacterInterface | string | undefined,
-    t: (key: string) => string
-): PlainCharacter | undefined {
-    if (!character) return undefined;
-
-    if (typeof character === "string") {
-        return { id: character, name: t(character) };
-    }
-
-    return {
-        id: character.id,
-        name: character.name ? t(character.name) : undefined,
-        surname: character.surname ? t(character.surname) : undefined,
-        icon: character.icon,
-        color: character.color,
-    };
-}
-
-function resolveText(
-    text: string | string[] | undefined,
-    t: (key: string) => string
-): string | undefined {
-    if (!text) return undefined;
-    if (Array.isArray(text)) return text.map((v) => t(v)).join(" ");
-    return t(text);
-}
-
 // ─── Типы ───────────────────────────────────────────────────
 type PlainCharacter = {
     id: string;
@@ -51,6 +17,64 @@ type DialogueModel = {
     text?: string;
     character?: PlainCharacter;
 };
+
+// ─────────────────────────────────────────────────────────────
+// HELPER: стабильная сериализация Character для сравнения
+// TanStack Query использует структурное сравнение данных,
+// но вложенные объекты без стабильного identity вызывают
+// лишние ре-рендеры. Мы возвращаем plain object с примитивами.
+// ─────────────────────────────────────────────────────────────
+const characterCache = new Map<string, PlainCharacter>();
+
+function resolveCharacter(
+    character: CharacterInterface | string | undefined,
+    t: (key: string) => string,
+    lang: string
+): PlainCharacter | undefined {
+    if (!character) return undefined;
+
+    const isString = typeof character === "string";
+    const charId = isString ? character : character.id;
+    const cacheKey = `${charId}_${lang}`;
+
+    if (characterCache.has(cacheKey)) {
+        return characterCache.get(cacheKey);
+    }
+
+    const resolved: PlainCharacter = isString
+        ? { id: character, name: t(character) }
+        : {
+            id: character.id,
+            name: character.name ? t(character.name) : undefined,
+            surname: character.surname ? t(character.surname) : undefined,
+            icon: character.icon,
+            color: character.color,
+        };
+
+    characterCache.set(cacheKey, resolved);
+    return resolved;
+}
+
+const textCache = new Map<string, string>();
+
+function resolveText(
+    text: string | string[] | undefined,
+    t: (key: string) => string,
+    lang: string
+): string | undefined {
+    if (!text) return undefined;
+    
+    const rawText = Array.isArray(text) ? text.join("|") : text;
+    const cacheKey = `${rawText}_${lang}`;
+
+    if (textCache.has(cacheKey)) {
+        return textCache.get(cacheKey);
+    }
+
+    const resolved = Array.isArray(text) ? text.map((v) => t(v)).join(" ") : t(text);
+    textCache.set(cacheKey, resolved);
+    return resolved;
+}
 
 // ─── Хуки ───────────────────────────────────────────────────
 
@@ -107,8 +131,8 @@ export function useQueryDialogue() {
             if (!dialogue) return EMPTY_DIALOGUE;
 
             return {
-                text: resolveText(dialogue.text, t),
-                character: resolveCharacter(dialogue.character, t),
+                text: resolveText(dialogue.text, t, i18n.language),
+                character: resolveCharacter(dialogue.character, t, i18n.language),
             };
         },
         // structuralSharing — TanStack сравнивает предыдущий и новый результат.
@@ -152,7 +176,7 @@ export function useQueryNarrativeHistory({ searchString }: { searchString?: stri
 
                 return {
                     character: characterName,
-                    text: resolveText(step.dialogue?.text, t) ?? "",
+                    text: resolveText(step.dialogue?.text, t, i18n.language) ?? "",
                     icon,
                     choices: step.choices,
                     inputValue: step.inputValue,
