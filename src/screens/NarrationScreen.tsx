@@ -6,7 +6,7 @@ import CardContent from "@mui/joy/CardContent";
 import Sheet from "@mui/joy/Sheet";
 import Typography from "@mui/joy/Typography";
 import clsx from "clsx";
-import { memo, RefObject, useCallback, useRef } from "react";
+import { memo, RefObject, useCallback, useEffect, useRef } from "react";
 import { MarkdownTypewriterHooks } from "react-markdown-typewriter";
 import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
@@ -222,10 +222,12 @@ const NarrationScreenText = memo(function NarrationScreenText({
     const text = dialogueData?.text;
     const { mode } = useColorScheme();
 
-    const handleAnimationStart = useCallback(() => {
-        restoreDelay();
-        startTypewriter();
-    }, [restoreDelay, startTypewriter]);
+    useEffect(() => {
+        if (text) {
+            restoreDelay();
+            startTypewriter();
+        }
+    }, [text, restoreDelay, startTypewriter]);
 
     const handleAnimationComplete = useCallback(
         (definition: "visible" | "hidden") => {
@@ -247,7 +249,6 @@ const NarrationScreenText = memo(function NarrationScreenText({
                     rehypePlugins={[rehypeRaw]}
                     delay={typewriterDelay}
                     motionProps={{
-                        onAnimationStart: handleAnimationStart,
                         onAnimationComplete: handleAnimationComplete,
                         onCharacterAnimationComplete: onCharacterAnimationComplete,
                     }}

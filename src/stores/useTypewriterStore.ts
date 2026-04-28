@@ -42,7 +42,7 @@ const useTypewriterStore = create<TypewriterStoreType>((set, get) => {
 
         skipToEnd: () => {
             // delay=0 заставляет MarkdownTypewriterHooks отрисовать всё мгновенно
-            set({ delay: 0 });
+            set({ delay: 0, inProgress: false });
         },
 
         restoreDelay: () => {
