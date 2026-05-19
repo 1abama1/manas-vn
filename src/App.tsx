@@ -16,46 +16,18 @@ const Home = lazy(async () => {
 const ErrorFallback: ComponentType<FallbackProps> = ({ error, resetErrorBoundary }) => {
     return (
         <div
-            role='alert'
-            style={{
-                pointerEvents: "auto",
-                backgroundColor: "black",
-            }}
+            role="alert"
+            className="pointer-events-auto bg-black min-h-screen flex flex-col items-center justify-center px-4"
         >
-            <h2
-                style={{
-                    color: "red",
-                    fontSize: "2rem",
-                    textAlign: "center",
-                    marginTop: "1rem",
-                }}
-            >
+            <h2 className="text-red-500 text-3xl text-center mt-4 font-bold">
                 Something went wrong
             </h2>
-            <p
-                style={{
-                    color: "white",
-                    fontSize: "1.5rem",
-                    textAlign: "center",
-                    marginTop: "1rem",
-                }}
-            >
+            <p className="text-white text-xl text-center mt-4 max-w-full break-words">
                 {(error as Error).message}
             </p>
-            <div
-                style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    marginTop: "1rem",
-                    paddingBottom: "1rem",
-                }}
-            >
+            <div className="flex justify-center mt-6 pb-4">
                 <button
-                    style={{
-                        padding: "0.5rem 1rem",
-                        backgroundColor: "white",
-                        borderRadius: "0.5rem",
-                    }}
+                    className="px-6 py-2 bg-white text-black font-semibold rounded-lg hover:bg-gray-200 transition-colors"
                     onClick={resetErrorBoundary}
                 >
                     Try again

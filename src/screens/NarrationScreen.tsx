@@ -1,6 +1,5 @@
 import { useColorScheme } from "@mui/joy";
 import AspectRatio from "@mui/joy/AspectRatio";
-import Box from "@mui/joy/Box";
 import Card from "@mui/joy/Card";
 import CardContent from "@mui/joy/CardContent";
 import Sheet from "@mui/joy/Sheet";
@@ -10,7 +9,6 @@ import { memo, useCallback, useEffect, useRef } from "react";
 import { MarkdownTypewriterHooks } from "react-markdown-typewriter";
 import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
-import { useShallow } from "zustand/react/shallow";
 import AnimatedDots from "../components/AnimatedDots";
 import SliderResizer from "../components/SliderResizer";
 import { useQueryDialogue } from "../hooks/useQueryInterface";
@@ -19,40 +17,37 @@ import useInterfaceStore from "../stores/useInterfaceStore";
 import useTypewriterStore from "../stores/useTypewriterStore";
 import ChoiceMenu from "./ChoiceMenu";
 
-// ─── Константы отрисовки ────────────────────────────────────
-const CARD_BORDER_RADIUS = 0;
-
-// ─── Основной экран ─────────────────────────────────────────
 export default function NarrationScreen() {
-    const { height: cardHeightTemp, imageWidth: cardImageWidth, setImageWidth: setCardImageWidth } =
-        useDialogueCardStore(useShallow((state) => state));
+    // ОПТИМИЗАЦИЯ ZUSTAND: Дробим селекторы. useShallow для всего объекта state - антипаттерн, 
+    // который ведет к лишним ререндерам, если меняется другое поле стора.
+    const cardHeight = useDialogueCardStore((state) => state.height);
+    const cardImageWidth = useDialogueCardStore((state) => state.imageWidth);
+    const setCardImageWidth = useDialogueCardStore((state) => state.setImageWidth);
 
     const { data: dialogueData } = useQueryDialogue();
     const { text, character } = dialogueData ?? {};
 
-    // Скрываем карточку, если нет текста
     const hasContent = Boolean(text);
-    const hidden = useInterfaceStore(
-        // useShallow здесь не нужен — примитивное значение
-        (state) => state.hidden || !hasContent
-    );
-    const cardHeight = hasContent ? cardHeightTemp : 0;
+    const isInterfaceHidden = useInterfaceStore((state) => state.hidden);
+    const hidden = isInterfaceHidden || !hasContent;
+
+    const currentCardHeight = hasContent ? cardHeight : 0;
 
     const cardVarians = clsx({
-        "motion-opacity-out-0 motion-translate-y-out-[50%]": hidden,
-        "motion-opacity-in-0 motion-translate-y-in-[50%]": !hidden,
+        "motion-opacity-out-0 motion-translate-y-out-[50%] pointer-events-none": hidden,
+        "motion-opacity-in-0 motion-translate-y-in-[50%] pointer-events-auto": !hidden,
     });
 
-    const cardImageVarians = clsx({
-        "motion-opacity-in-0 motion-translate-x-in-[-5%]": !hidden && character?.icon,
-        "motion-opacity-out-0": hidden || !character?.icon,
-    });
+    const cardImageVarians = clsx(
+        "hidden md:block", // Скрываем ползунок на смартфонах, чтобы не мешал пальцам
+        {
+            "motion-opacity-in-0 motion-translate-x-in-[-5%]": !hidden && character?.icon,
+            "motion-opacity-out-0": hidden || !character?.icon,
+        }
+    );
 
     const paragraphRef = useRef<HTMLDivElement>(null);
 
-    // ИСПРАВЛЕНО: добавлен paragraphRef в зависимости useCallback.
-    // Ref-объект стабилен (React гарантирует), поэтому callback
-    // пересоздаётся только при реальной смене элемента.
     const handleCharacterAnimationComplete = useCallback(
         (ref: { current: HTMLSpanElement | null }) => {
             const paragraph = paragraphRef.current;
@@ -64,12 +59,9 @@ export default function NarrationScreen() {
                 });
             }
         },
-        // paragraphRef сам по себе стабилен, но мы включаем его
-        // чтобы линтер не предупреждал о deps.
-        [paragraphRef]
+        [] // paragraphRef стабилен, зависимости не нужны
     );
 
-    // ОПТИМИЗАЦИЯ: clamp логика вынесена в стабильный callback
     const handleImageWidthChange = useCallback(
         (_: Event | React.SyntheticEvent, value: number | number[]) => {
             if (typeof value !== "number") return;
@@ -80,53 +72,30 @@ export default function NarrationScreen() {
     );
 
     return (
-        <Box
-            sx={{
-                position: "absolute",
-                display: "flex",
-                flexDirection: "column",
-                height: "100%",
-                width: "100%",
-            }}
-        >
-            <Box sx={{ flex: 1, minHeight: 0, display: "flex", flexDirection: "column" }}>
-                <Box sx={{ flex: 1, minHeight: 0 }}>
+        // ОПТИМИЗАЦИЯ СТИЛЕЙ: Замена <Box sx={{...}}> на <div> с классами Tailwind
+        <div className="absolute flex flex-col h-full w-full">
+            <div className="flex-1 min-h-0 flex flex-col">
+                <div className="flex-1 min-h-0">
                     <ChoiceMenu />
-                </Box>
-                <Box
-                    sx={{
-                        flex: "0 0 auto",
-                        height: `${cardHeight}%`,
-                        minHeight: 0,
-                        pointerEvents: !hidden ? "auto" : "none",
-                    }}
-                    className={cardVarians}
+                </div>
+                <div
+                    className={clsx("flex-none min-h-0 transition-all duration-300", cardVarians)}
+                    style={{ height: `${currentCardHeight}%` }}
                 >
                     <Card
                         key="dialogue-card"
                         orientation="horizontal"
-                        sx={{
-                            overflow: "hidden",
-                            gap: 1,
-                            padding: 0,
-                            height: "100%",
-                            width: "100%",
-                            marginX: 0,
-                            borderRadius: CARD_BORDER_RADIUS,
-                            borderLeft: 0,
-                            borderRight: 0,
-                            borderBottom: 0,
-                        }}
+                        className="overflow-hidden p-0 h-full w-full m-0 rounded-none border-b-0 border-l-0 border-r-0"
+                        style={{ gap: '0.25rem' }}
                     >
                         {character?.icon && (
                             <AspectRatio
-                                flex
                                 ratio="1"
-                                maxHeight="20%"
-                                sx={{ height: "100%", minWidth: `${cardImageWidth}%` }}
-                                className="motion-scale-x-in-0"
+                                // МОБИЛЬНАЯ АДАПТИВНОСТЬ: Фиксированная ширина на мобильных, переменная (из слайдера) на десктопе
+                                className="motion-scale-x-in-0 shrink-0 h-full w-[80px] sm:w-[120px] md:w-[var(--card-img-width)]"
+                                style={{ "--card-img-width": `${cardImageWidth}%` } as React.CSSProperties}
                             >
-                                <img src={character.icon} loading="lazy" alt="" />
+                                <img src={character.icon} loading="lazy" alt="Avatar" className="object-cover" />
                             </AspectRatio>
                         )}
 
@@ -136,31 +105,20 @@ export default function NarrationScreen() {
                             min={0}
                             value={cardImageWidth}
                             onChange={handleImageWidthChange}
-                            sx={{
-                                pointerEvents: !hidden && character?.icon ? "auto" : "none",
-                            }}
-                            className={cardImageVarians}
+                            className={clsx(
+                                cardImageVarians,
+                                !hidden && character?.icon ? "pointer-events-auto" : "pointer-events-none"
+                            )}
                         />
 
-                        <CardContent>
-                            {/* ОПТИМИЗАЦИЯ: CharacterName вынесен в memo-компонент */}
+                        <CardContent className="flex flex-col min-h-0 p-2 md:p-3">
                             <CharacterName character={character} hidden={hidden} />
 
                             <Sheet
                                 ref={paragraphRef}
-                                sx={{
-                                    bgcolor: "background.level1",
-                                    borderRadius: "sm",
-                                    p: 1.5,
-                                    minHeight: 10,
-                                    display: "flex",
-                                    flex: 1,
-                                    overflow: "auto",
-                                    height: "100%",
-                                    marginX: { xs: 0, md: 3 },
-                                    marginBottom: 0,
-                                    paddingBottom: { xs: 4, md: 5 },
-                                }}
+                                // Оставляем sx ТОЛЬКО для токенов палитры Joy UI, всю геометрию выносим в Tailwind
+                                sx={{ bgcolor: "background.level1" }}
+                                className="rounded-sm p-3 min-h-[10px] flex flex-1 overflow-auto h-full mx-0 md:mx-6 mb-0 pb-4 md:pb-5"
                             >
                                 <NarrationScreenText
                                     text={text}
@@ -169,13 +127,13 @@ export default function NarrationScreen() {
                             </Sheet>
                         </CardContent>
                     </Card>
-                </Box>
-            </Box>
-        </Box>
+                </div>
+            </div>
+        </div>
     );
 }
 
-// ─── CharacterName: memo предотвращает ре-рендер при смене текста ──
+// ─── CharacterName ──────────────────────────────────────────
 type CharacterNameProps = {
     character: { name?: string; surname?: string; color?: string } | undefined;
     hidden: boolean;
@@ -185,26 +143,20 @@ const CharacterName = memo(function CharacterName({ character, hidden }: Charact
     const hasName = Boolean(character?.name);
     return (
         <Typography
-            fontSize={{ xs: "lg", sm: "xl", lg: "xl2" }}
-            fontWeight="lg"
-            sx={{
-                color: character?.color,
-                paddingLeft: 1,
-                height: { xs: undefined, md: 30 },
-                marginLeft: 2,
-            }}
-            className={
+            className={clsx(
+                "pl-2 ml-2 md:ml-4 md:h-[30px] font-bold text-lg sm:text-xl lg:text-2xl",
                 hasName && !hidden
                     ? "motion-opacity-in-0 motion-translate-x-in-[-3%]"
                     : "motion-opacity-out-0"
-            }
+            )}
+            style={{ color: character?.color }}
         >
             {`${character?.name ?? ""} ${character?.surname ?? ""}`.trim()}
         </Typography>
     );
 });
 
-// memo: ре-рендер только при смене text или typewriterDelay
+// ─── NarrationScreenText ────────────────────────────────────
 type NarrationScreenTextProps = {
     text: string | undefined;
     onCharacterAnimationComplete: (ref: { current: HTMLSpanElement | null }) => void;
@@ -214,7 +166,8 @@ const NarrationScreenText = memo(function NarrationScreenText({
     text,
     onCharacterAnimationComplete,
 }: NarrationScreenTextProps) {
-    const typewriterDelay = useTypewriterStore(useShallow((state) => state.delay));
+    // ОПТИМИЗАЦИЯ ZUSTAND: useShallow для примитивов не нужен, он только добавляет overhead
+    const typewriterDelay = useTypewriterStore((state) => state.delay);
     const startTypewriter = useTypewriterStore((state) => state.start);
     const endTypewriter   = useTypewriterStore((state) => state.end);
     const restoreDelay    = useTypewriterStore((state) => state.restoreDelay);
@@ -235,11 +188,11 @@ const NarrationScreenText = memo(function NarrationScreenText({
     );
 
     return (
-        <p
-            className={`prose prose-sm sm:prose-base md:prose-lg lg:prose-xl ${
-                mode === "dark" ? "dark:prose-invert" : ""
-            }`}
-            style={{ margin: 0, padding: 0, maxWidth: "100%" }}
+        <div
+            className={clsx(
+                "prose prose-sm sm:prose-base md:prose-lg lg:prose-xl m-0 p-0 max-w-full",
+                mode === "dark" && "dark:prose-invert"
+            )}
         >
             <span>
                 <MarkdownTypewriterHooks
@@ -255,6 +208,6 @@ const NarrationScreenText = memo(function NarrationScreenText({
                     {text}
                 </MarkdownTypewriterHooks>
             </span>
-        </p>
+        </div>
     );
 });

@@ -14,7 +14,7 @@ export default function OfflineScreen() {
             open={open}
             className='motion-blur-in-md'
             sx={{
-                backdropFilter: "blur(10px)",
+                bgcolor: "rgba(0, 0, 0, 0.8)"
             }}
         >
             <Box
